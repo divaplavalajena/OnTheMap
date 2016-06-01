@@ -8,13 +8,34 @@
 
 /* Begin PBXBuildFile section */
 		9CD60CDD1CFF6BF9005C43BA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD60CDC1CFF6BF9005C43BA /* AppDelegate.swift */; };
-		9CD60CDF1CFF6BF9005C43BA /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD60CDE1CFF6BF9005C43BA /* FirstViewController.swift */; };
-		9CD60CE11CFF6BF9005C43BA /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD60CE01CFF6BF9005C43BA /* SecondViewController.swift */; };
+		9CD60CDF1CFF6BF9005C43BA /* MapTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD60CDE1CFF6BF9005C43BA /* MapTabViewController.swift */; };
+		9CD60CE11CFF6BF9005C43BA /* TableTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD60CE01CFF6BF9005C43BA /* TableTabViewController.swift */; };
 		9CD60CE41CFF6BF9005C43BA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CD60CE21CFF6BF9005C43BA /* Main.storyboard */; };
 		9CD60CE61CFF6BF9005C43BA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9CD60CE51CFF6BF9005C43BA /* Assets.xcassets */; };
 		9CD60CE91CFF6BF9005C43BA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9CD60CE71CFF6BF9005C43BA /* LaunchScreen.storyboard */; };
 		9CD60CF41CFF6BF9005C43BA /* On_The_MapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD60CF31CFF6BF9005C43BA /* On_The_MapTests.swift */; };
 		9CD60CFF1CFF6BF9005C43BA /* On_The_MapUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD60CFE1CFF6BF9005C43BA /* On_The_MapUITests.swift */; };
+		9CD60D0F1CFF6CD3005C43BA /* GCDBlackBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD60D0E1CFF6CD3005C43BA /* GCDBlackBox.swift */; };
+		9CD60D111CFF6CF1005C43BA /* StudentInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD60D101CFF6CF1005C43BA /* StudentInformation.swift */; };
+		9CD60D141CFF6D5E005C43BA /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD60D131CFF6D5E005C43BA /* LoginViewController.swift */; };
+		9CD60D161CFF6DCC005C43BA /* InfoPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD60D151CFF6DCC005C43BA /* InfoPostViewController.swift */; };
+		9CD60D1E1CFF6FAE005C43BA /* UdacityConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD60D1D1CFF6FAE005C43BA /* UdacityConstants.swift */; };
+		9CD60D201CFF6FC5005C43BA /* ParseConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD60D1F1CFF6FC5005C43BA /* ParseConstants.swift */; };
+		9CD60D311CFF7322005C43BA /* Icon-40.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CD60D221CFF7322005C43BA /* Icon-40.png */; };
+		9CD60D321CFF7322005C43BA /* Icon-40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CD60D231CFF7322005C43BA /* Icon-40@2x.png */; };
+		9CD60D331CFF7322005C43BA /* Icon-40@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CD60D241CFF7322005C43BA /* Icon-40@3x.png */; };
+		9CD60D341CFF7322005C43BA /* Icon-60@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CD60D251CFF7322005C43BA /* Icon-60@2x.png */; };
+		9CD60D351CFF7322005C43BA /* Icon-60@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CD60D261CFF7322005C43BA /* Icon-60@3x.png */; };
+		9CD60D361CFF7322005C43BA /* Icon-76.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CD60D271CFF7322005C43BA /* Icon-76.png */; };
+		9CD60D371CFF7322005C43BA /* Icon-76@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CD60D281CFF7322005C43BA /* Icon-76@2x.png */; };
+		9CD60D381CFF7322005C43BA /* Icon-83.5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CD60D291CFF7322005C43BA /* Icon-83.5@2x.png */; };
+		9CD60D391CFF7322005C43BA /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CD60D2A1CFF7322005C43BA /* Icon-Small.png */; };
+		9CD60D3A1CFF7322005C43BA /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CD60D2B1CFF7322005C43BA /* Icon-Small@2x.png */; };
+		9CD60D3B1CFF7322005C43BA /* Icon-Small@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9CD60D2C1CFF7322005C43BA /* Icon-Small@3x.png */; };
+		9CD60D3C1CFF7322005C43BA /* list.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 9CD60D2D1CFF7322005C43BA /* list.pdf */; };
+		9CD60D3D1CFF7322005C43BA /* map.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 9CD60D2E1CFF7322005C43BA /* map.pdf */; };
+		9CD60D3E1CFF7322005C43BA /* pin.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 9CD60D2F1CFF7322005C43BA /* pin.pdf */; };
+		9CD60D3F1CFF7322005C43BA /* udacity.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 9CD60D301CFF7322005C43BA /* udacity.pdf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,8 +58,8 @@
 /* Begin PBXFileReference section */
 		9CD60CD91CFF6BF9005C43BA /* On The Map.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "On The Map.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CD60CDC1CFF6BF9005C43BA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		9CD60CDE1CFF6BF9005C43BA /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
-		9CD60CE01CFF6BF9005C43BA /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
+		9CD60CDE1CFF6BF9005C43BA /* MapTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTabViewController.swift; sourceTree = "<group>"; };
+		9CD60CE01CFF6BF9005C43BA /* TableTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableTabViewController.swift; sourceTree = "<group>"; };
 		9CD60CE31CFF6BF9005C43BA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9CD60CE51CFF6BF9005C43BA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		9CD60CE81CFF6BF9005C43BA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -49,6 +70,27 @@
 		9CD60CFA1CFF6BF9005C43BA /* On The MapUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "On The MapUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CD60CFE1CFF6BF9005C43BA /* On_The_MapUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = On_The_MapUITests.swift; sourceTree = "<group>"; };
 		9CD60D001CFF6BF9005C43BA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9CD60D0E1CFF6CD3005C43BA /* GCDBlackBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDBlackBox.swift; sourceTree = "<group>"; };
+		9CD60D101CFF6CF1005C43BA /* StudentInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentInformation.swift; sourceTree = "<group>"; };
+		9CD60D131CFF6D5E005C43BA /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		9CD60D151CFF6DCC005C43BA /* InfoPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoPostViewController.swift; sourceTree = "<group>"; };
+		9CD60D1D1CFF6FAE005C43BA /* UdacityConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityConstants.swift; sourceTree = "<group>"; };
+		9CD60D1F1CFF6FC5005C43BA /* ParseConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseConstants.swift; sourceTree = "<group>"; };
+		9CD60D221CFF7322005C43BA /* Icon-40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-40.png"; sourceTree = "<group>"; };
+		9CD60D231CFF7322005C43BA /* Icon-40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-40@2x.png"; sourceTree = "<group>"; };
+		9CD60D241CFF7322005C43BA /* Icon-40@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-40@3x.png"; sourceTree = "<group>"; };
+		9CD60D251CFF7322005C43BA /* Icon-60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-60@2x.png"; sourceTree = "<group>"; };
+		9CD60D261CFF7322005C43BA /* Icon-60@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-60@3x.png"; sourceTree = "<group>"; };
+		9CD60D271CFF7322005C43BA /* Icon-76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-76.png"; sourceTree = "<group>"; };
+		9CD60D281CFF7322005C43BA /* Icon-76@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-76@2x.png"; sourceTree = "<group>"; };
+		9CD60D291CFF7322005C43BA /* Icon-83.5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-83.5@2x.png"; sourceTree = "<group>"; };
+		9CD60D2A1CFF7322005C43BA /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small.png"; sourceTree = "<group>"; };
+		9CD60D2B1CFF7322005C43BA /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@2x.png"; sourceTree = "<group>"; };
+		9CD60D2C1CFF7322005C43BA /* Icon-Small@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@3x.png"; sourceTree = "<group>"; };
+		9CD60D2D1CFF7322005C43BA /* list.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = list.pdf; sourceTree = "<group>"; };
+		9CD60D2E1CFF7322005C43BA /* map.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = map.pdf; sourceTree = "<group>"; };
+		9CD60D2F1CFF7322005C43BA /* pin.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = pin.pdf; sourceTree = "<group>"; };
+		9CD60D301CFF7322005C43BA /* udacity.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = udacity.pdf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,12 +142,11 @@
 			isa = PBXGroup;
 			children = (
 				9CD60CDC1CFF6BF9005C43BA /* AppDelegate.swift */,
-				9CD60CDE1CFF6BF9005C43BA /* FirstViewController.swift */,
-				9CD60CE01CFF6BF9005C43BA /* SecondViewController.swift */,
-				9CD60CE21CFF6BF9005C43BA /* Main.storyboard */,
-				9CD60CE51CFF6BF9005C43BA /* Assets.xcassets */,
-				9CD60CE71CFF6BF9005C43BA /* LaunchScreen.storyboard */,
-				9CD60CEA1CFF6BF9005C43BA /* Info.plist */,
+				9CD60D0E1CFF6CD3005C43BA /* GCDBlackBox.swift */,
+				9CD60D191CFF6E0A005C43BA /* Model */,
+				9CD60D121CFF6D04005C43BA /* Controller */,
+				9CD60D171CFF6DEA005C43BA /* Assets */,
+				9CD60D181CFF6DFB005C43BA /* Supporting Files */,
 			);
 			path = "On The Map";
 			sourceTree = "<group>";
@@ -126,6 +167,92 @@
 				9CD60D001CFF6BF9005C43BA /* Info.plist */,
 			);
 			path = "On The MapUITests";
+			sourceTree = "<group>";
+		};
+		9CD60D121CFF6D04005C43BA /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				9CD60D131CFF6D5E005C43BA /* LoginViewController.swift */,
+				9CD60CDE1CFF6BF9005C43BA /* MapTabViewController.swift */,
+				9CD60CE01CFF6BF9005C43BA /* TableTabViewController.swift */,
+				9CD60D151CFF6DCC005C43BA /* InfoPostViewController.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		9CD60D171CFF6DEA005C43BA /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				9CD60D211CFF7322005C43BA /* On The Map Assets */,
+				9CD60CE21CFF6BF9005C43BA /* Main.storyboard */,
+				9CD60CE51CFF6BF9005C43BA /* Assets.xcassets */,
+				9CD60CE71CFF6BF9005C43BA /* LaunchScreen.storyboard */,
+			);
+			name = Assets;
+			sourceTree = "<group>";
+		};
+		9CD60D181CFF6DFB005C43BA /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				9CD60CEA1CFF6BF9005C43BA /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		9CD60D191CFF6E0A005C43BA /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				9CD60D1A1CFF6F51005C43BA /* Clients */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		9CD60D1A1CFF6F51005C43BA /* Clients */ = {
+			isa = PBXGroup;
+			children = (
+				9CD60D101CFF6CF1005C43BA /* StudentInformation.swift */,
+				9CD60D1C1CFF6F73005C43BA /* Udacity */,
+				9CD60D1B1CFF6F5B005C43BA /* Parse */,
+			);
+			name = Clients;
+			sourceTree = "<group>";
+		};
+		9CD60D1B1CFF6F5B005C43BA /* Parse */ = {
+			isa = PBXGroup;
+			children = (
+				9CD60D1F1CFF6FC5005C43BA /* ParseConstants.swift */,
+			);
+			name = Parse;
+			sourceTree = "<group>";
+		};
+		9CD60D1C1CFF6F73005C43BA /* Udacity */ = {
+			isa = PBXGroup;
+			children = (
+				9CD60D1D1CFF6FAE005C43BA /* UdacityConstants.swift */,
+			);
+			name = Udacity;
+			sourceTree = "<group>";
+		};
+		9CD60D211CFF7322005C43BA /* On The Map Assets */ = {
+			isa = PBXGroup;
+			children = (
+				9CD60D221CFF7322005C43BA /* Icon-40.png */,
+				9CD60D231CFF7322005C43BA /* Icon-40@2x.png */,
+				9CD60D241CFF7322005C43BA /* Icon-40@3x.png */,
+				9CD60D251CFF7322005C43BA /* Icon-60@2x.png */,
+				9CD60D261CFF7322005C43BA /* Icon-60@3x.png */,
+				9CD60D271CFF7322005C43BA /* Icon-76.png */,
+				9CD60D281CFF7322005C43BA /* Icon-76@2x.png */,
+				9CD60D291CFF7322005C43BA /* Icon-83.5@2x.png */,
+				9CD60D2A1CFF7322005C43BA /* Icon-Small.png */,
+				9CD60D2B1CFF7322005C43BA /* Icon-Small@2x.png */,
+				9CD60D2C1CFF7322005C43BA /* Icon-Small@3x.png */,
+				9CD60D2D1CFF7322005C43BA /* list.pdf */,
+				9CD60D2E1CFF7322005C43BA /* map.pdf */,
+				9CD60D2F1CFF7322005C43BA /* pin.pdf */,
+				9CD60D301CFF7322005C43BA /* udacity.pdf */,
+			);
+			path = "On The Map Assets";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -232,9 +359,24 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9CD60D3F1CFF7322005C43BA /* udacity.pdf in Resources */,
+				9CD60D3E1CFF7322005C43BA /* pin.pdf in Resources */,
+				9CD60D381CFF7322005C43BA /* Icon-83.5@2x.png in Resources */,
+				9CD60D351CFF7322005C43BA /* Icon-60@3x.png in Resources */,
+				9CD60D311CFF7322005C43BA /* Icon-40.png in Resources */,
 				9CD60CE91CFF6BF9005C43BA /* LaunchScreen.storyboard in Resources */,
 				9CD60CE61CFF6BF9005C43BA /* Assets.xcassets in Resources */,
+				9CD60D3A1CFF7322005C43BA /* Icon-Small@2x.png in Resources */,
+				9CD60D341CFF7322005C43BA /* Icon-60@2x.png in Resources */,
 				9CD60CE41CFF6BF9005C43BA /* Main.storyboard in Resources */,
+				9CD60D331CFF7322005C43BA /* Icon-40@3x.png in Resources */,
+				9CD60D391CFF7322005C43BA /* Icon-Small.png in Resources */,
+				9CD60D321CFF7322005C43BA /* Icon-40@2x.png in Resources */,
+				9CD60D371CFF7322005C43BA /* Icon-76@2x.png in Resources */,
+				9CD60D3B1CFF7322005C43BA /* Icon-Small@3x.png in Resources */,
+				9CD60D3D1CFF7322005C43BA /* map.pdf in Resources */,
+				9CD60D361CFF7322005C43BA /* Icon-76.png in Resources */,
+				9CD60D3C1CFF7322005C43BA /* list.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -259,9 +401,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9CD60CE11CFF6BF9005C43BA /* SecondViewController.swift in Sources */,
+				9CD60D161CFF6DCC005C43BA /* InfoPostViewController.swift in Sources */,
+				9CD60D1E1CFF6FAE005C43BA /* UdacityConstants.swift in Sources */,
+				9CD60D141CFF6D5E005C43BA /* LoginViewController.swift in Sources */,
+				9CD60D111CFF6CF1005C43BA /* StudentInformation.swift in Sources */,
+				9CD60CE11CFF6BF9005C43BA /* TableTabViewController.swift in Sources */,
+				9CD60D201CFF6FC5005C43BA /* ParseConstants.swift in Sources */,
 				9CD60CDD1CFF6BF9005C43BA /* AppDelegate.swift in Sources */,
-				9CD60CDF1CFF6BF9005C43BA /* FirstViewController.swift in Sources */,
+				9CD60CDF1CFF6BF9005C43BA /* MapTabViewController.swift in Sources */,
+				9CD60D0F1CFF6CD3005C43BA /* GCDBlackBox.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

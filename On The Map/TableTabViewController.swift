@@ -1,5 +1,5 @@
 //
-//  FirstViewController.swift
+//  TableTabViewController.swift
 //  On The Map
 //
 //  Created by Jena Grafton on 6/1/16.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FirstViewController: UIViewController {
+class TableTabViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
