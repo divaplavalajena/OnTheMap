@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class InfoPostViewController: UIViewController, MKMapViewDelegate {
+class InfoPostViewController: UIViewController, MKMapViewDelegate, UITextViewDelegate {
 
     @IBOutlet var mapView: MKMapView!
     
@@ -28,8 +28,11 @@ class InfoPostViewController: UIViewController, MKMapViewDelegate {
         locationTextView.hidden = true
         findOnMapOutlet.hidden = true
         
+        view.backgroundColor = UIColor(red: 0.46666667, green: 0.71764706, blue: 0.90196078, alpha: 1.0)
         mapView.hidden = false
         linkEntryTextView.hidden = false
+        linkEntryTextView.text = "Enter a Link to Share Here"
+        linkEntryTextView.textColor = UIColor.whiteColor()
         submitOutlet.hidden = false
         
         //TODO: Cancel button not showing up on after this button is clicked - no idea why
@@ -37,18 +40,53 @@ class InfoPostViewController: UIViewController, MKMapViewDelegate {
         cancelOutlet.titleLabel!.textColor = UIColor.whiteColor()
     }
     
-    
     @IBOutlet var submitOutlet: UIButton!
     @IBAction func submitButton(sender: AnyObject) {
         
     }
     
-    
     @IBOutlet var linkEntryTextView: UITextView!
     
+    func textViewDidBeginEditing(textView: UITextView) {
+        if locationTextView.hidden == false {
+            locationTextView.becomeFirstResponder()
+            if locationTextView.text == "Enter Your Location Here" {
+                locationTextView.text = ""
+                locationTextView.textColor = UIColor.whiteColor()
+            }
+        }
+        
+        if linkEntryTextView.hidden == false {
+            linkEntryTextView.becomeFirstResponder()
+            if linkEntryTextView.text == "Enter a Link to Share Here" {
+                linkEntryTextView.text = ""
+                linkEntryTextView.textColor = UIColor.whiteColor()
+            }
+        }
+    }
+    
+    func textViewDidEndEditing(textView: UITextView) {
+        if locationTextView.text.isEmpty {
+            locationTextView.text = "Enter Your Location Here"
+            locationTextView.textColor = UIColor.lightGrayColor()
+        }
+        locationTextView.resignFirstResponder()
+        
+        if linkEntryTextView.text.isEmpty {
+            linkEntryTextView.text = "Enter a Link to Share Here"
+            linkEntryTextView.textColor = UIColor.whiteColor()
+        }
+        linkEntryTextView.resignFirstResponder()
+    }
+    
+    
+    
     override func viewWillAppear(animated: Bool) {
+        //view.backgroundColor = UIColor(red: 230.0, green: 230.0, blue: 230.0, alpha: 1.0)
         studyLabel.hidden = false
         locationTextView.hidden = false
+        locationTextView.text = "Enter Your Location Here"
+        locationTextView.textColor = UIColor.whiteColor()
         findOnMapOutlet.hidden = false
         cancelOutlet.hidden = false
         
@@ -62,6 +100,10 @@ class InfoPostViewController: UIViewController, MKMapViewDelegate {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        
+        //locationTextView.text = "Enter Your Location Here"
+        //locationTextView.textColor = UIColor.whiteColor()
+        
         
         // The "locations" array is an array of dictionary objects that are similar to the JSON
         // data that you can download from parse.

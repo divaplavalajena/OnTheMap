@@ -107,15 +107,18 @@ today?</string>
                                     <rect key="frame" x="0.0" y="28" width="400" height="209"/>
                                 </variation>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Enter Your Location Here" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="afN-Py-wdo" userLabel="Location Entry Text View">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="afN-Py-wdo" userLabel="Location Entry Text View">
                                 <rect key="frame" x="0.0" y="201" width="600" height="219"/>
-                                <color key="backgroundColor" red="0.44380563499999998" green="0.71448415519999997" blue="0.91017061470000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.45624244213104248" green="0.71445721387863159" blue="0.91011297702789307" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                                 <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
                                     <rect key="frame" x="0.0" y="236" width="400" height="237"/>
                                 </variation>
+                                <connections>
+                                    <outlet property="delegate" destination="yXM-au-uxn" id="aN0-Tl-eqB"/>
+                                </connections>
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fsg-8j-Uad" userLabel="Find On Map Button/Outlet">
                                 <rect key="frame" x="232" y="515" width="136" height="30"/>
@@ -132,6 +135,18 @@ today?</string>
                                     <action selector="findOnMapButton:" destination="yXM-au-uxn" eventType="touchUpInside" id="ewx-Y8-jwl"/>
                                 </connections>
                             </button>
+                            <textView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="nRl-CN-0lz" userLabel="Link Entry Text View">
+                                <rect key="frame" x="0.0" y="66" width="600" height="135"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="0.0" y="0.0" width="400" height="237"/>
+                                </variation>
+                                <connections>
+                                    <outlet property="delegate" destination="yXM-au-uxn" id="lhh-d0-mhu"/>
+                                </connections>
+                            </textView>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Laz-8N-DUE">
                                 <rect key="frame" x="0.0" y="201" width="600" height="399"/>
                             </mapView>
@@ -150,22 +165,6 @@ today?</string>
                                     <action selector="submitButton:" destination="yXM-au-uxn" eventType="touchUpInside" id="jj3-EP-tsO"/>
                                 </connections>
                             </button>
-                            <textView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="nRl-CN-0lz" userLabel="Link Entry Text View">
-                                <rect key="frame" x="0.0" y="28" width="600" height="173"/>
-                                <color key="backgroundColor" red="0.45624244209999998" green="0.71445721390000005" blue="0.91011297700000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <string key="text">
-
-
-
-Enter a Link to Share Here</string>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                <dataDetectorType key="dataDetectorTypes" link="YES"/>
-                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="0.0" y="0.0" width="400" height="237"/>
-                                </variation>
-                            </textView>
                         </subviews>
                         <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -175,7 +174,7 @@ Enter a Link to Share Here</string>
                             <constraint firstItem="Laz-8N-DUE" firstAttribute="top" secondItem="nRl-CN-0lz" secondAttribute="bottom" id="BIj-ZO-1tQ"/>
                             <constraint firstItem="Laz-8N-DUE" firstAttribute="top" secondItem="afN-Py-wdo" secondAttribute="top" id="Chw-gJ-t6K"/>
                             <constraint firstItem="fsg-8j-Uad" firstAttribute="centerX" secondItem="3Bw-gd-oUr" secondAttribute="centerX" id="FVj-Tw-bbu"/>
-                            <constraint firstItem="jzg-Kt-oen" firstAttribute="top" secondItem="nRl-CN-0lz" secondAttribute="top" id="Je6-Li-GqM"/>
+                            <constraint firstItem="jzg-Kt-oen" firstAttribute="top" secondItem="nRl-CN-0lz" secondAttribute="top" constant="-38" id="Je6-Li-GqM"/>
                             <constraint firstItem="fsg-8j-Uad" firstAttribute="centerX" secondItem="nRl-CN-0lz" secondAttribute="centerX" id="Jt6-qz-ryH"/>
                             <constraint firstItem="asm-fw-ZeE" firstAttribute="top" secondItem="fsg-8j-Uad" secondAttribute="bottom" constant="55" id="M4n-KH-iMK"/>
                             <constraint firstItem="AMt-bB-4aU" firstAttribute="trailing" secondItem="nRl-CN-0lz" secondAttribute="trailing" id="PKx-Fd-uu6"/>
@@ -192,7 +191,6 @@ Enter a Link to Share Here</string>
                             <constraint firstItem="Laz-8N-DUE" firstAttribute="leading" secondItem="3Bw-gd-oUr" secondAttribute="leadingMargin" constant="-20" id="txc-jt-5R4"/>
                             <constraint firstItem="Laz-8N-DUE" firstAttribute="bottom" secondItem="asm-fw-ZeE" secondAttribute="top" id="u97-Su-Oyd"/>
                             <constraint firstAttribute="trailingMargin" secondItem="jzg-Kt-oen" secondAttribute="trailing" constant="5" id="wMa-0Z-Qbn"/>
-                            <constraint firstItem="nRl-CN-0lz" firstAttribute="top" secondItem="KC7-Y3-YAq" secondAttribute="bottom" constant="8" id="wpP-ms-HTy"/>
                         </constraints>
                     </view>
                     <connections>
@@ -207,7 +205,7 @@ Enter a Link to Share Here</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="82D-DE-xq8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1623" y="-39"/>
+            <point key="canvasLocation" x="1528" y="-44"/>
         </scene>
         <!--TableTabViewController-->
         <scene sceneID="wg7-f3-ORb">
