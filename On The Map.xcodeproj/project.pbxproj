@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9CBC42401D0627D80009B2A2 /* StudentClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CBC423F1D0627D80009B2A2 /* StudentClient.swift */; };
+		9CBC42441D0629600009B2A2 /* StudentConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CBC42431D0629600009B2A2 /* StudentConvenience.swift */; };
 		9CD60CDD1CFF6BF9005C43BA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD60CDC1CFF6BF9005C43BA /* AppDelegate.swift */; };
 		9CD60CDF1CFF6BF9005C43BA /* MapTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD60CDE1CFF6BF9005C43BA /* MapTabViewController.swift */; };
 		9CD60CE11CFF6BF9005C43BA /* TableTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD60CE01CFF6BF9005C43BA /* TableTabViewController.swift */; };
@@ -56,6 +58,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		9CBC423F1D0627D80009B2A2 /* StudentClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentClient.swift; sourceTree = "<group>"; };
+		9CBC42431D0629600009B2A2 /* StudentConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentConvenience.swift; sourceTree = "<group>"; };
 		9CD60CD91CFF6BF9005C43BA /* On The Map.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "On The Map.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CD60CDC1CFF6BF9005C43BA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9CD60CDE1CFF6BF9005C43BA /* MapTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTabViewController.swift; sourceTree = "<group>"; };
@@ -210,7 +214,6 @@
 		9CD60D1A1CFF6F51005C43BA /* Clients */ = {
 			isa = PBXGroup;
 			children = (
-				9CD60D101CFF6CF1005C43BA /* StudentInformation.swift */,
 				9CD60D1C1CFF6F73005C43BA /* Udacity */,
 				9CD60D1B1CFF6F5B005C43BA /* Parse */,
 			);
@@ -228,7 +231,10 @@
 		9CD60D1C1CFF6F73005C43BA /* Udacity */ = {
 			isa = PBXGroup;
 			children = (
+				9CBC42431D0629600009B2A2 /* StudentConvenience.swift */,
+				9CBC423F1D0627D80009B2A2 /* StudentClient.swift */,
 				9CD60D1D1CFF6FAE005C43BA /* UdacityConstants.swift */,
+				9CD60D101CFF6CF1005C43BA /* StudentInformation.swift */,
 			);
 			name = Udacity;
 			sourceTree = "<group>";
@@ -403,6 +409,7 @@
 			files = (
 				9CD60D161CFF6DCC005C43BA /* InfoPostViewController.swift in Sources */,
 				9CD60D1E1CFF6FAE005C43BA /* UdacityConstants.swift in Sources */,
+				9CBC42401D0627D80009B2A2 /* StudentClient.swift in Sources */,
 				9CD60D141CFF6D5E005C43BA /* LoginViewController.swift in Sources */,
 				9CD60D111CFF6CF1005C43BA /* StudentInformation.swift in Sources */,
 				9CD60CE11CFF6BF9005C43BA /* TableTabViewController.swift in Sources */,
@@ -410,6 +417,7 @@
 				9CD60CDD1CFF6BF9005C43BA /* AppDelegate.swift in Sources */,
 				9CD60CDF1CFF6BF9005C43BA /* MapTabViewController.swift in Sources */,
 				9CD60D0F1CFF6CD3005C43BA /* GCDBlackBox.swift in Sources */,
+				9CBC42441D0629600009B2A2 /* StudentConvenience.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -634,6 +642,7 @@
 				9CD60D051CFF6BF9005C43BA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9CD60D061CFF6BF9005C43BA /* Build configuration list for PBXNativeTarget "On The MapTests" */ = {
 			isa = XCConfigurationList;
@@ -642,6 +651,7 @@
 				9CD60D081CFF6BF9005C43BA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9CD60D091CFF6BF9005C43BA /* Build configuration list for PBXNativeTarget "On The MapUITests" */ = {
 			isa = XCConfigurationList;
@@ -650,6 +660,7 @@
 				9CD60D0B1CFF6BF9005C43BA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
