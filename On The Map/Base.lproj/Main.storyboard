@@ -312,7 +312,7 @@ today?</string>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="30u-aW-d8F"/>
                                 </constraints>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="1" green="0.39046720530000001" blue="0.05642144801" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <variation key="heightClass=regular-widthClass=compact">
@@ -325,9 +325,9 @@ today?</string>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="xCT-z9-Gii"/>
                                 </constraints>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="1" green="0.39046720530000001" blue="0.05642144801" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mwm-BI-TUP" userLabel="Login Button">
                                 <rect key="frame" x="168" y="322" width="264" height="44"/>
@@ -340,7 +340,7 @@ today?</string>
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="LoginButton:" destination="XlA-4K-ViN" eventType="touchUpInside" id="QCA-Nm-gUa"/>
+                                    <action selector="loginButton:" destination="XlA-4K-ViN" eventType="touchUpInside" id="WVj-Pw-Cor"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Don't have an account?" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Odc-nh-Cvm">
@@ -369,7 +369,7 @@ today?</string>
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="SignUpButton:" destination="XlA-4K-ViN" eventType="touchUpInside" id="yui-qS-hK4"/>
+                                    <action selector="signUpButton:" destination="XlA-4K-ViN" eventType="touchUpInside" id="dSj-Eg-EA1"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KbM-cE-wOW" userLabel="DebugTextLabel">
@@ -381,9 +381,13 @@ today?</string>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="4bb-hP-WNF">
+                                <rect key="frame" x="282" y="409" width="37" height="37"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="0.5683350253984758" blue="0.055696151075287914" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="4bb-hP-WNF" firstAttribute="top" secondItem="Odc-nh-Cvm" secondAttribute="bottom" constant="-1" id="2HD-CI-lnX"/>
                             <constraint firstItem="t6R-J5-Pmh" firstAttribute="trailing" secondItem="6tE-Yt-mHX" secondAttribute="trailing" id="5ww-bj-kPP">
                                 <variation key="widthClass=compact" constant="-29"/>
                             </constraint>
@@ -410,6 +414,7 @@ today?</string>
                                 <variation key="widthClass=compact" constant="29"/>
                             </constraint>
                             <constraint firstItem="t6R-J5-Pmh" firstAttribute="top" secondItem="TYF-Uf-voo" secondAttribute="bottom" constant="8" symbolic="YES" id="aM4-UA-6It"/>
+                            <constraint firstItem="4bb-hP-WNF" firstAttribute="centerX" secondItem="BAt-TZ-PpN" secondAttribute="centerX" id="acF-WK-FuA"/>
                             <constraint firstItem="6tE-Yt-mHX" firstAttribute="top" secondItem="cWr-2F-Xiq" secondAttribute="bottom" constant="14" id="f8u-jj-tnX">
                                 <variation key="widthClass=compact" constant="34"/>
                             </constraint>
@@ -428,9 +433,11 @@ today?</string>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="EmailTextField" destination="6tE-Yt-mHX" id="Bcp-Lu-jL5"/>
-                        <outlet property="PasswordTextField" destination="kyB-QT-pPd" id="4nI-bm-2kY"/>
+                        <outlet property="activityIndicatorView" destination="4bb-hP-WNF" id="fUS-6X-cv2"/>
                         <outlet property="debugTextLabel" destination="KbM-cE-wOW" id="oLj-Tu-l55"/>
+                        <outlet property="loginButtonOutlet" destination="mwm-BI-TUP" id="zp5-lH-scV"/>
+                        <outlet property="passwordTextField" destination="kyB-QT-pPd" id="4ug-Qe-E3o"/>
+                        <outlet property="usernameTextField" destination="6tE-Yt-mHX" id="E1w-iH-zkU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vxO-Km-Imr" userLabel="First Responder" sceneMemberID="firstResponder"/>

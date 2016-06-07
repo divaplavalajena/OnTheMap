@@ -6,7 +6,7 @@
 //  Copyright © 2016 Bella Voce Productions. All rights reserved.
 //
 
-// MARK: - TMDBClient (Constants)
+// MARK: - StudentClient (Constants)
 
 extension StudentClient {
     
@@ -20,7 +20,7 @@ extension StudentClient {
         static let ApiScheme = "https"
         static let ApiHost = "www.udacity.com"
         static let ApiPath = "/api"
-        static let AuthorizationURL : String = "https://www.themoviedb.org/authenticate/"
+        static let SessionAuthentication : String = "/session"
     }
     
     // MARK: Methods
