@@ -122,7 +122,7 @@ class LoginViewController: UIViewController {
                 print(error)
                 completionHandlerForSession(success: false, sessionID: nil, errorString: "Login Failed (Session ID).")
             } else {
-                if let sessionCategory = results[StudentClient.JSONResponseKeys.SessionCategory] as? [NSDictionary] {
+                if let sessionCategory = results[StudentClient.JSONResponseKeys.SessionCategory] as? [String: AnyObject] {
                     if let sessionID = sessionCategory[StudentClient.JSONResponseKeys.SessionID] as? String {
                         completionHandlerForSession(success: true, sessionID: sessionID, errorString: nil)
                         print("sessionID is \(sessionID)")
