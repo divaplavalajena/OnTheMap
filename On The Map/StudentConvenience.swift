@@ -15,31 +15,38 @@ extension StudentClient {
     
     func authenticateWithViewController(hostViewController: UIViewController, completionHandlerForAuth: (success: Bool, errorString: String?) -> Void) {
         
-        self.getSessionID(requestToken) { (success, sessionID, errorString) in
-            if success {
-                // success! we have the sessionID!
-                self.sessionID = sessionID
-            } else {
-                completionHandlerForAuth(success: success, errorString: errorString)
-            }
-        }
     }
     
-    private func getSessionID(requestToken: String?, completionHandlerForSession: (success: Bool, sessionID: String?, errorString: String?) -> Void) {
+    
+    // MARK: POST Convenience Methods
+    
+    //Get a session ID and userID and authenticate with Udacity
+    func udacityPOSTSession(username: String, password: String, completionHandlerForSession: (success: Bool, sessionID: String?, errorString: String?) -> Void) {
         
         /* 1. Specify parameters, method (if has {key}), and HTTP body (if POST) */
-        let parameters = [StudentClient.ParameterKeys.RequestToken: requestToken!]
+        let parameters = [String:AnyObject]()
+        let myMethod: String = StudentClient.Constants.SessionAuthentication
+        let jsonBody = "{\"udacity\": {\"username\": \"\(username)\", \"password\": \"\(password)\"}}"
         
         /* 2. Make the request */
-        taskForGETMethod(Methods.AuthenticationSessionNew, parameters: parameters) { (results, error) in
+        taskForPOSTUdacityMethod(myMethod, parameters: parameters, jsonBody: jsonBody) { (results, error) in
             
             /* 3. Send the desired value(s) to completion handler */
             if let error = error {
                 print(error)
                 completionHandlerForSession(success: false, sessionID: nil, errorString: "Login Failed (Session ID).")
             } else {
-                if let sessionID = results[StudentClient.JSONResponseKeys.SessionID] as? String {
-                    completionHandlerForSession(success: true, sessionID: sessionID, errorString: nil)
+                if let sessionCategory = results[StudentClient.JSONResponseKeys.SessionCategory] as? [String: AnyObject] {
+                    if let sessionID = sessionCategory[StudentClient.JSONResponseKeys.SessionID] as? String {
+                        completionHandlerForSession(success: true, sessionID: sessionID, errorString: nil)
+                        print("sessionID is \(sessionID)")
+                    }
+                    if let userAccount = results[StudentClient.JSONResponseKeys.UserAccount] as? [String: AnyObject] {
+                        if let userAccountID = userAccount[StudentClient.JSONResponseKeys.UserAccountID] as? String {
+                            self.userID = userAccountID
+                            print("user account ID is \(self.userID!)")
+                        }
+                    }
                 } else {
                     print("Could not find \(StudentClient.JSONResponseKeys.SessionID) in \(results)")
                     completionHandlerForSession(success: false, sessionID: nil, errorString: "Login Failed (Session ID).")
@@ -47,34 +54,27 @@ extension StudentClient {
             }
         }
     }
-    
-    // MARK: POST Convenience Methods
-    
-    func postToFavorites(movie: StudentInfo, favorite: Bool, completionHandlerForFavorite: (result: Int?, error: NSError?) -> Void)  {
+
+    func udacityDELETESession(completionHandlerForDeleteSession: (success: Bool, errorString: String?) -> Void) {
         
         /* 1. Specify parameters, method (if has {key}), and HTTP body (if POST) */
-        let parameters = [StudentClient.ParameterKeys.SessionID : StudentClient.sharedInstance().sessionID!]
-        var mutableMethod: String = Methods.AccountIDFavorite
-        mutableMethod = subtituteKeyInMethod(mutableMethod, key: StudentClient.URLKeys.UserID, value: String(StudentClient.sharedInstance().userID!))!
-        let jsonBody = "{\"\(StudentClient.JSONBodyKeys.MediaType)\": \"movie\",\"\(StudentClient.JSONBodyKeys.MediaID)\": \"\(StudentClient.JSONResponseKeys.lastName)\",\"\(StudentClient.JSONBodyKeys.Favorite)\": \(favorite)}"
+        let parameters = [String:AnyObject]()
+        let myMethod: String = StudentClient.Constants.SessionAuthentication
+        
         
         /* 2. Make the request */
-        taskForPOSTMethod(mutableMethod, parameters: parameters, jsonBody: jsonBody) { (results, error) in
+        taskForDELETEUdacityMethod(myMethod, parameters: parameters) { (results, error) in
             
             /* 3. Send the desired value(s) to completion handler */
             if let error = error {
-                completionHandlerForFavorite(result: nil, error: error)
+                print(error)
+                completionHandlerForDeleteSession(success: false, errorString: "Logout Failed.")
             } else {
-                if let results = results[StudentClient.JSONResponseKeys.StatusCode] as? Int {
-                    completionHandlerForFavorite(result: results, error: nil)
-                } else {
-                    completionHandlerForFavorite(result: nil, error: NSError(domain: "postToFavoritesList parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse postToFavoritesList"]))
-                }
+                completionHandlerForDeleteSession(success: true, errorString: nil)
+                print("Logout successful")
             }
         }
     }
-
-
 
     
 }

@@ -6,8 +6,9 @@
 //  Copyright © 2016 Bella Voce Productions. All rights reserved.
 //
 
+import Foundation
 
-// MARK: - TMDBMovie
+// MARK: - StudentInfo
 
 struct StudentInfo {
     
@@ -15,20 +16,28 @@ struct StudentInfo {
     
     let firstName: String
     let lastName: String
-    let linkURL: String?
-    let latitude: String?
-    let longitude: String?
+    
+    let mapString: String?
+    let mediaURL: String?
+    
+    let latitude: Double?
+    let longitude: Double?
+    
+    let createdAt: NSDate?
+    let updatedAt: NSDate?
     
     // MARK: Initializers
     
     // construct a TMDBMovie from a dictionary
     init(dictionary: [String:AnyObject]) {
-        firstName = dictionary[StudentClient.JSONResponseKeys.firstName] as! String
-        lastName = dictionary[StudentClient.JSONResponseKeys.lastName] as! String
-        latitude = dictionary[StudentClient.JSONResponseKeys.latitude] as? String
-        longitude = dictionary[StudentClient.JSONResponseKeys.longitude] as? String
-        linkURL = dictionary[StudentClient.JSONResponseKeys.linkURL] as? String
-        
+        firstName = dictionary[StudentClient.JSONResponseKeys.FirstName] as! String
+        lastName = dictionary[StudentClient.JSONResponseKeys.LastName] as! String
+        mapString = dictionary[StudentClient.JSONResponseKeys.MapString] as? String
+        mediaURL = dictionary[StudentClient.JSONResponseKeys.MediaURL] as? String
+        latitude = dictionary[StudentClient.JSONResponseKeys.Latitude] as? Double
+        longitude = dictionary[StudentClient.JSONResponseKeys.Longitude] as? Double
+        createdAt = dictionary[StudentClient.JSONResponseKeys.CreatedAt] as? NSDate
+        updatedAt = dictionary[StudentClient.JSONResponseKeys.UpdatedAt] as? NSDate
     }
     
     static func studentsFromResults(results: [[String:AnyObject]]) -> [StudentInfo] {
