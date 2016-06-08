@@ -122,8 +122,11 @@ class LoginViewController: UIViewController {
                 print(error)
                 completionHandlerForSession(success: false, sessionID: nil, errorString: "Login Failed (Session ID).")
             } else {
-                if let sessionID = results[StudentClient.JSONResponseKeys.SessionID] as? String {
-                    completionHandlerForSession(success: true, sessionID: sessionID, errorString: nil)
+                if let sessionCategory = results[StudentClient.JSONResponseKeys.SessionCategory] as? [NSDictionary] {
+                    if let sessionID = sessionCategory[StudentClient.JSONResponseKeys.SessionID] as? String {
+                        completionHandlerForSession(success: true, sessionID: sessionID, errorString: nil)
+                        print("sessionID is \(sessionID)")
+                    }
                 } else {
                     print("Could not find \(StudentClient.JSONResponseKeys.SessionID) in \(results)")
                     completionHandlerForSession(success: false, sessionID: nil, errorString: "Login Failed (Session ID).")
@@ -135,10 +138,9 @@ class LoginViewController: UIViewController {
     }
 
     
-    func taskForPOSTMethod(method: String, parameters: [String:AnyObject], jsonBody: String, completionHandlerForPOST: (result: AnyObject!, error: NSError?) -> Void) {
+    func taskForPOSTMethod(method: String, parameters: [String:AnyObject], jsonBody: String, completionHandlerForPOST: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         
         /* 1. Set the parameters */
-        //parameters[ParameterKeys.ApiKey] = Constants.ApiKey
         var parameters = parameters
         
         /* 2/3. Build the URL, Configure the request */
@@ -177,15 +179,16 @@ class LoginViewController: UIViewController {
             }
             
             /* 5/6. Parse the data and use the data (happens in completion handler) */
-            //self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandlerForPOST)
+            
             let newData = data.subdataWithRange(NSMakeRange(5, data.length - 5)) /* subset response data! */
             print(NSString(data: newData, encoding: NSUTF8StringEncoding))
+            self.convertDataWithCompletionHandler(newData, completionHandlerForConvertData: completionHandlerForPOST)
         }
         
         /* 7. Start the request */
         task.resume()
         
-        //return task
+        return task
     }
     
     // create a URL from parameters
