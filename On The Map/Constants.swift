@@ -18,9 +18,9 @@ extension StudentClient {
         static let ApiHost = "www.udacity.com"
         static let ApiPath = "/api"
         static let SessionAuthentication : String = "/session"
+        static let GetPublicUserData : String = "/users/"
         
         // MARK: Parse API Keys
-        static let ApiKey : String = "Api_Key" /* placeholder */
         static let ParseApiKey : String = "QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr"
         static let RESTApiKey : String = "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"
         
@@ -32,55 +32,21 @@ extension StudentClient {
         
     }
     
-    /*
-    // MARK: Methods
-    struct Methods {
-        
-        // MARK: Account
-        static let Account = "/account"
-        static let AccountIDFavoriteMovies = "/account/{id}/favorite/movies"
-        static let AccountIDFavorite = "/account/{id}/favorite"
-        static let AccountIDWatchlistMovies = "/account/{id}/watchlist/movies"
-        static let AccountIDWatchlist = "/account/{id}/watchlist"
-        
-        // MARK: Authentication
-        static let AuthenticationTokenNew = "/authentication/token/new"
-        static let AuthenticationSessionNew = "/authentication/session/new"
-        
-        // MARK: Search
-        static let SearchMovie = "/search/movie"
-        
-        // MARK: Config
-        static let Config = "/configuration"
-        
-    }
     
     // MARK: URL Keys
     struct URLKeys {
         static let UserID = "id"
     }
-    */
-    
     
     // MARK: Parameter Keys
     struct ParameterKeys {
-        static let ApiKey = "Api_Key" /* placeholder */
-        static let ParseLimit100 = "?limit=100"
+        static let ParseLimit100 = "limit"
         static let ParseSkip = "?limit=200&skip=400"
         static let ParseOrder = "?order=-updatedAt"
         
     }
     
-    /*
-    // MARK: JSON Body Keys
-    struct JSONBodyKeys {
-        static let MediaType = "media_type"
-        static let MediaID = "media_id"
-        static let Favorite = "favorite"
-        static let Watchlist = "watchlist"
-    }
-    */
- 
+     
     // MARK: JSON Response Keys
     struct JSONResponseKeys {
         

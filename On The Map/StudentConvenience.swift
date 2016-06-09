@@ -13,9 +13,60 @@ import Foundation
 
 extension StudentClient {
     
-    func authenticateWithViewController(hostViewController: UIViewController, completionHandlerForAuth: (success: Bool, errorString: String?) -> Void) {
+    // MARK: GET Convenience Methods
+    
+    func getStudentLocations(completionHandlerForStudentLocations: (result: [StudentInfo]?, error: NSError?) -> Void) {
         
+        /* 1. Specify parameters, method (if has {key}), and HTTP body (if POST) */
+        //let parameters = [String:AnyObject]() /***** placeholder real one one line below needs work *******/
+        let parameters = [StudentClient.ParameterKeys.ParseLimit100: "100"]
+        let myMethod: String = StudentClient.Constants.ParseMethod
+        
+        /* 2. Make the request */
+        taskForGETMethod(myMethod, parameters: parameters) { (results, error) in
+            
+            /* 3. Send the desired value(s) to completion handler */
+            if let error = error {
+                completionHandlerForStudentLocations(result: nil, error: error)
+            } else {
+                if let results = results[StudentClient.JSONResponseKeys.StudentResults] as? [[String:AnyObject]] {
+                    print("The number of students in results from JSON is: \(results.count)")
+                    print("results array of dictionaries taskForGetMethod after parsing JSON \(results)")
+                    let students = StudentInfo.studentsFromResults(results)
+                    completionHandlerForStudentLocations(result: students, error: nil)
+                    //print("students array of dictionaries after studentsFromResults function call: \(students)")
+                } else {
+                    completionHandlerForStudentLocations(result: nil, error: NSError(domain: "getStudentLocations parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getStudentLocations"]))
+                }
+            }
+        }
     }
+
+    
+    func getUdacityPublicUserData(completionHandlerForGetPublicUserData: (result: [StudentInfo]?, error: NSError?) -> Void) {
+        
+        /* 1. Specify parameters, method (if has {key}), and HTTP body (if POST) */
+        let parameters = [String:AnyObject]()
+        var mutableMethod: String = Constants.GetPublicUserData
+        mutableMethod = subtituteKeyInMethod(mutableMethod, key: StudentClient.URLKeys.UserID, value: String(StudentClient.sharedInstance().userID!))!
+        
+        /* 2. Make the request */
+        taskForGETUdacity(mutableMethod, parameters: parameters) { (results, error) in
+            
+            /* 3. Send the desired value(s) to completion handler */
+            if let error = error {
+                completionHandlerForGetPublicUserData(result: nil, error: error)
+            } else {
+                if let results = results[StudentClient.JSONResponseKeys.StudentResults] as? [[String:AnyObject]] {
+                    let students = StudentInfo.studentsFromResults(results)
+                    completionHandlerForGetPublicUserData(result: students, error: nil)
+                } else {
+                    completionHandlerForGetPublicUserData(result: nil, error: NSError(domain: "getUdacityPublicUserData parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getUdacityPublicUserData"]))
+                }
+            }
+        }
+    }
+
     
     
     // MARK: POST Convenience Methods

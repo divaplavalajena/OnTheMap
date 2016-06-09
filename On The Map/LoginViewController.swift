@@ -43,22 +43,7 @@ class LoginViewController: UIViewController {
 
                 }
             })
-            
         }
-
-        
-        /*
-         //changed TMDBClient to StudentClient
-         StudentClient.sharedInstance().authenticateWithViewController(self) { (success, errorString) in
-         performUIUpdatesOnMain {
-         if success {
-         self.completeLogin()
-         } else {
-         self.displayError(errorString)
-         }
-         }
-         }
-         */
     }
     
 

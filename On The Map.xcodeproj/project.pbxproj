@@ -204,28 +204,12 @@
 		9CD60D191CFF6E0A005C43BA /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				9CD60D1A1CFF6F51005C43BA /* Clients */,
-			);
-			name = Model;
-			sourceTree = "<group>";
-		};
-		9CD60D1A1CFF6F51005C43BA /* Clients */ = {
-			isa = PBXGroup;
-			children = (
-				9CD60D1C1CFF6F73005C43BA /* Udacity */,
-			);
-			name = Clients;
-			sourceTree = "<group>";
-		};
-		9CD60D1C1CFF6F73005C43BA /* Udacity */ = {
-			isa = PBXGroup;
-			children = (
 				9CBC42431D0629600009B2A2 /* StudentConvenience.swift */,
 				9CBC423F1D0627D80009B2A2 /* StudentClient.swift */,
 				9CD60D1D1CFF6FAE005C43BA /* Constants.swift */,
 				9CD60D101CFF6CF1005C43BA /* StudentInformation.swift */,
 			);
-			name = Udacity;
+			name = Model;
 			sourceTree = "<group>";
 		};
 		9CD60D211CFF7322005C43BA /* On The Map Assets */ = {
