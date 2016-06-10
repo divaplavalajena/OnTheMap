@@ -12,6 +12,7 @@ import MapKit
 class InfoPostViewController: UIViewController, MKMapViewDelegate, UITextViewDelegate {
 
     @IBOutlet var mapView: MKMapView!
+    @IBOutlet var activityIndicator: UIActivityIndicatorView!
     
     @IBOutlet var cancelOutlet: UIButton!
     @IBAction func cancelButton(sender: AnyObject) {
@@ -19,11 +20,22 @@ class InfoPostViewController: UIViewController, MKMapViewDelegate, UITextViewDel
     }
     
     @IBOutlet var studyLabel: UILabel!
-    
     @IBOutlet var locationTextView: UITextView!
     
     @IBOutlet var findOnMapOutlet: UIButton!
     @IBAction func findOnMapButton(sender: AnyObject) {
+        activityIndicator.hidden = false
+        activityIndicator.startAnimating()
+        
+        // Forward Geocode the string from the locationTextView and pass to map
+        if locationTextView.text == nil {
+            print("no address to geocode - please enter an location")
+        } else {
+            forwardGeocoding(locationTextView.text)
+            activityIndicator.stopAnimating()
+        }
+
+        
         studyLabel.hidden = true
         locationTextView.hidden = true
         findOnMapOutlet.hidden = true
@@ -35,14 +47,14 @@ class InfoPostViewController: UIViewController, MKMapViewDelegate, UITextViewDel
         linkEntryTextView.textColor = UIColor.whiteColor()
         submitOutlet.hidden = false
         
-        //TODO: Cancel button not showing up on after this button is clicked - no idea why
         cancelOutlet.hidden = false
         cancelOutlet.titleLabel!.textColor = UIColor.whiteColor()
+        
     }
     
     @IBOutlet var submitOutlet: UIButton!
     @IBAction func submitButton(sender: AnyObject) {
-        
+        activityIndicator.hidden = true
     }
     
     @IBOutlet var linkEntryTextView: UITextView!
@@ -90,6 +102,7 @@ class InfoPostViewController: UIViewController, MKMapViewDelegate, UITextViewDel
         findOnMapOutlet.hidden = false
         cancelOutlet.hidden = false
         
+        activityIndicator.hidden = true
         mapView.hidden = true
         linkEntryTextView.hidden = true
         submitOutlet.hidden = true
@@ -100,50 +113,51 @@ class InfoPostViewController: UIViewController, MKMapViewDelegate, UITextViewDel
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
-        //locationTextView.text = "Enter Your Location Here"
-        //locationTextView.textColor = UIColor.whiteColor()
-        
-        
-        // The "locations" array is an array of dictionary objects that are similar to the JSON
-        // data that you can download from parse.
-        let locations = hardCodedLocationData()
-        
-        // We will create an MKPointAnnotation for each dictionary in "locations". The
-        // point annotations will be stored in this array, and then provided to the map view.
-        var annotations = [MKPointAnnotation]()
-        
-        // The "locations" array is loaded with the sample data below. We are using the dictionaries
-        // to create map annotations. This would be more stylish if the dictionaries were being
-        // used to create custom structs. Perhaps StudentLocation structs.
-        
-        for dictionary in locations {
-            
-            // Notice that the float values are being used to create CLLocationDegree values.
-            // This is a version of the Double type.
-            let lat = CLLocationDegrees(dictionary["latitude"] as! Double)
-            let long = CLLocationDegrees(dictionary["longitude"] as! Double)
-            
-            // The lat and long are used to create a CLLocationCoordinates2D instance.
-            let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
-            
-            let first = dictionary["firstName"] as! String
-            let last = dictionary["lastName"] as! String
-            let mediaURL = dictionary["mediaURL"] as! String
-            
-            // Here we create the annotation and set its coordiate, title, and subtitle properties
-            let annotation = MKPointAnnotation()
-            annotation.coordinate = coordinate
-            annotation.title = "\(first) \(last)"
-            annotation.subtitle = mediaURL
-            
-            // Finally we place the annotation in an array of annotations.
-            annotations.append(annotation)
-        }
-        
-        // When the array is complete, we add the annotations to the map.
-        self.mapView.addAnnotations(annotations)
 
+    }
+    
+    //MARK: - Forward Geocoding address 
+    
+    func forwardGeocoding(address: String) {
+        CLGeocoder().geocodeAddressString(address, completionHandler: { (placemarks, error) in
+            if error != nil {
+                print(error)
+                
+                //TODO: Place alert view here for error in forward geocoding location
+                
+                return
+            }
+            if placemarks?.count > 0 {
+                let placemark = placemarks?[0]
+                let location = placemark?.location
+                let coordinate = location?.coordinate
+                
+                //separate out lat and long for CLLocation use for map zoom
+                let coordLat = coordinate!.latitude
+                let coordLong = coordinate!.longitude
+                
+                //print for testing
+                print("\nlat: \(coordinate!.latitude), long: \(coordinate!.longitude)")
+                
+                //create objects containing annotation data to add to map
+                var annotations = [MKPointAnnotation]()
+                let annotation = MKPointAnnotation()
+                annotation.coordinate = coordinate!
+                annotation.title = self.locationTextView.text
+                annotations.append(annotation)
+                self.mapView.addAnnotations(annotations)
+                
+                //map zoom to location specified
+                let coordinateZoom = CLLocation(latitude: coordLat, longitude: coordLong)
+                self.centerMapOnLocation(coordinateZoom)
+            }
+        })
+    }
+    
+    func centerMapOnLocation(location: CLLocation) {
+        let regionRadius: CLLocationDistance = 1000
+        let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, regionRadius * 2.0, regionRadius * 2.0)
+        mapView.setRegion(coordinateRegion, animated: true)
     }
 
     // MARK: - MKMapViewDelegate
@@ -170,7 +184,7 @@ class InfoPostViewController: UIViewController, MKMapViewDelegate, UITextViewDel
         return pinView
     }
     
-    
+    /*
     // This delegate method is implemented to respond to taps. It opens the system browser
     // to the URL specified in the annotationViews subtitle property.
     func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
@@ -181,6 +195,8 @@ class InfoPostViewController: UIViewController, MKMapViewDelegate, UITextViewDel
             }
         }
     }
+    */
+    
     //    func mapView(mapView: MKMapView, annotationView: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
     //
     //        if control == annotationView.rightCalloutAccessoryView {
@@ -189,61 +205,6 @@ class InfoPostViewController: UIViewController, MKMapViewDelegate, UITextViewDel
     //        }
     //    }
     
-    // MARK: - Sample Data
-    
-    // Some sample data. This is a dictionary that is more or less similar to the
-    // JSON data that you will download from Parse.
-    
-    func hardCodedLocationData() -> [[String : AnyObject]] {
-        return  [
-            [
-                "createdAt" : "2015-02-24T22:27:14.456Z",
-                "firstName" : "Jessica",
-                "lastName" : "Uelmen",
-                "latitude" : 28.1461248,
-                "longitude" : -82.75676799999999,
-                "mapString" : "Tarpon Springs, FL",
-                "mediaURL" : "www.linkedin.com/in/jessicauelmen/en",
-                "objectId" : "kj18GEaWD8",
-                "uniqueKey" : 872458750,
-                "updatedAt" : "2015-03-09T22:07:09.593Z"
-            ], [
-                "createdAt" : "2015-02-24T22:35:30.639Z",
-                "firstName" : "Gabrielle",
-                "lastName" : "Miller-Messner",
-                "latitude" : 35.1740471,
-                "longitude" : -79.3922539,
-                "mapString" : "Southern Pines, NC",
-                "mediaURL" : "http://www.linkedin.com/pub/gabrielle-miller-messner/11/557/60/en",
-                "objectId" : "8ZEuHF5uX8",
-                "uniqueKey" : 2256298598,
-                "updatedAt" : "2015-03-11T03:23:49.582Z"
-            ], [
-                "createdAt" : "2015-02-24T22:30:54.442Z",
-                "firstName" : "Jason",
-                "lastName" : "Schatz",
-                "latitude" : 37.7617,
-                "longitude" : -122.4216,
-                "mapString" : "18th and Valencia, San Francisco, CA",
-                "mediaURL" : "http://en.wikipedia.org/wiki/Swift_%28programming_language%29",
-                "objectId" : "hiz0vOTmrL",
-                "uniqueKey" : 2362758535,
-                "updatedAt" : "2015-03-10T17:20:31.828Z"
-            ], [
-                "createdAt" : "2015-03-11T02:48:18.321Z",
-                "firstName" : "Jarrod",
-                "lastName" : "Parkes",
-                "latitude" : 34.73037,
-                "longitude" : -86.58611000000001,
-                "mapString" : "Huntsville, Alabama",
-                "mediaURL" : "https://linkedin.com/in/jarrodparkes",
-                "objectId" : "CDHfAy8sdp",
-                "uniqueKey" : 996618664,
-                "updatedAt" : "2015-03-13T03:37:58.389Z"
-            ]
-        ]
-    }
-
     /*
     // MARK: - Navigation
 
