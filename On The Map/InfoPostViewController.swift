@@ -32,6 +32,7 @@ class InfoPostViewController: UIViewController, MKMapViewDelegate, UITextViewDel
             print("no address to geocode - please enter an location")
         } else {
             forwardGeocoding(locationTextView.text)
+            StudentClient.sharedInstance().userMapString = locationTextView.text
             activityIndicator.stopAnimating()
         }
 
@@ -54,7 +55,28 @@ class InfoPostViewController: UIViewController, MKMapViewDelegate, UITextViewDel
     
     @IBOutlet var submitOutlet: UIButton!
     @IBAction func submitButton(sender: AnyObject) {
+        
+        //TODO: Gather firstName, lastName, and mapURL to save in post to parse
+        if linkEntryTextView.text == nil {
+            print("no link entry to save for post to parse - please enter an location")
+            //TODO: Insert an alert view here
+        } else {
+            StudentClient.sharedInstance().userMediaURL = linkEntryTextView.text
+            if StudentClient.sharedInstance().userMediaURL != nil {
+                StudentClient.sharedInstance().postStudentLocationToParse { (result, error) in
+                    performUIUpdatesOnMain {
+                        if let userInfo = result {
+                            print("There were no erros posting userInfo to parse: \(userInfo)")
+                        } else {
+                            //TODO: create alert view that warns user info not posted to parse - try again
+                            print(error)
+                        }
+                    }
+                }
+            }
+        }
         activityIndicator.hidden = true
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
     @IBOutlet var linkEntryTextView: UITextView!
@@ -111,8 +133,20 @@ class InfoPostViewController: UIViewController, MKMapViewDelegate, UITextViewDel
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
+        
+        StudentClient.sharedInstance().getUdacityPublicUserData { (result, error) in
+            performUIUpdatesOnMain {
+                if let userInfo = result {
+                    print("There were no erros gathering user info. It contains \(userInfo.count) entries.")
+                } else {
+                    //TODO: create alert view that warns user info not gathered - try again, and dismiss VC
+                    print(error)
+                }
+                
+            }
+        }
+        
 
     }
     
@@ -135,6 +169,10 @@ class InfoPostViewController: UIViewController, MKMapViewDelegate, UITextViewDel
                 //separate out lat and long for CLLocation use for map zoom
                 let coordLat = coordinate!.latitude
                 let coordLong = coordinate!.longitude
+                
+                //set lat and long to sharedInstance values for method that will use info
+                StudentClient.sharedInstance().userLatitude = coordLat
+                StudentClient.sharedInstance().userLongitude = coordLong
                 
                 //print for testing
                 print("\nlat: \(coordinate!.latitude), long: \(coordinate!.longitude)")

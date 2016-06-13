@@ -60,6 +60,11 @@ extension StudentClient {
         static let UserAccount = "account"
         static let UserAccountID = "key"
         
+        //MARK: Udacity Get Public User Info
+        static let User = "user"
+        static let UserFirstName = "first_name"
+        static let UserLastName = "last_name"
+        
         // MARK: Account - Udacity account (user) ID
         static let UniqueKey = "uniqueKey"
         

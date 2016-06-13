@@ -42,14 +42,14 @@ extension StudentClient {
         }
     }
 
-    //TODO: finish making sure this method is correct - get udacity public user data like first and last name and userID - remove from other method????? 
-    //Then use this user data in postStudentLocationToParse method
-    func getUdacityPublicUserData(completionHandlerForGetPublicUserData: (result: [StudentInfo]?, error: NSError?) -> Void) {
+    //Get udacity public user data like first and last name from userID (obtained from udacityPOSTSession)
+            //Then use this user data in postStudentLocationToParse method
+    func getUdacityPublicUserData(completionHandlerForGetPublicUserData: (result: [String:AnyObject]?, error: NSError?) -> Void) {
         
         /* 1. Specify parameters, method (if has {key}), and HTTP body (if POST) */
         let parameters = [String:AnyObject]()
-        var mutableMethod: String = Constants.GetPublicUserData
-        mutableMethod = subtituteKeyInMethod(mutableMethod, key: StudentClient.URLKeys.UserID, value: String(StudentClient.sharedInstance().userID!))!
+        let mutableMethod: String = "\(Constants.GetPublicUserData)\(StudentClient.sharedInstance().userID!)"
+        print(mutableMethod)
         
         /* 2. Make the request */
         taskForGETUdacity(mutableMethod, parameters: parameters) { (results, error) in
@@ -58,9 +58,15 @@ extension StudentClient {
             if let error = error {
                 completionHandlerForGetPublicUserData(result: nil, error: error)
             } else {
-                if let results = results[StudentClient.JSONResponseKeys.StudentResults] as? [[String:AnyObject]] {
-                    let students = StudentInfo.studentsFromResults(results)
-                    completionHandlerForGetPublicUserData(result: students, error: nil)
+                if let userInfo = results[StudentClient.JSONResponseKeys.User] as? [String:AnyObject] {
+                    if let firstName = userInfo[StudentClient.JSONResponseKeys.UserFirstName] as? String,
+                        let lastName = userInfo[StudentClient.JSONResponseKeys.UserLastName] as? String {
+                        self.userFirstName = firstName
+                        self.userLastName = lastName
+                        print("User Name is \(self.userFirstName!) \(self.userLastName!)")
+                    }
+                    completionHandlerForGetPublicUserData(result: userInfo, error: nil)
+                    
                 } else {
                     completionHandlerForGetPublicUserData(result: nil, error: NSError(domain: "getUdacityPublicUserData parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getUdacityPublicUserData"]))
                 }
@@ -73,15 +79,13 @@ extension StudentClient {
     // MARK: POST Convenience Methods
     
     //POST a student location to Parse
-    func postStudentLocationToParse(student: StudentInfo, completionHandlerForPOSTStudentLocation: (result: Int?, error: NSError?) -> Void) {
+    func postStudentLocationToParse(completionHandlerForPOSTStudentLocation: (result: Int?, error: NSError?) -> Void) {
         
         /* 1. Specify parameters, method (if has {key}), and HTTP body (if POST) */
         let parameters = [String:AnyObject]()
-            //let parameters = [StudentClient.URLKeys.UserID : StudentClient.sharedInstance().userID!]
         let myMethod: String = StudentClient.Constants.ParseMethod
-            //mutableMethod = subtituteKeyInMethod(mutableMethod, key: TMDBClient.URLKeys.UserID, value: String(TMDBClient.sharedInstance().userID!))!
-        let jsonBody = "{\"uniqueKey\": \"\(StudentClient.sharedInstance().userID)\", \"firstName\": \"John\", \"lastName\": \"Doe\",\"mapString\": \"Mountain View, CA\", \"mediaURL\": \"https://udacity.com\",\"latitude\": 37.386052, \"longitude\": -122.083851}"
-            //TODO: Finish JSON body with correct variables and constants in postStudentLocationToParse
+        let jsonBody = "{\"uniqueKey\": \"\(StudentClient.sharedInstance().userID!)\", \"firstName\": \"\(StudentClient.sharedInstance().userFirstName!)\", \"lastName\": \"\(StudentClient.sharedInstance().userLastName!)\",\"mapString\": \"\(StudentClient.sharedInstance().userMapString!)\", \"mediaURL\": \"\(StudentClient.sharedInstance().userMediaURL!)\",\"latitude\": \(StudentClient.sharedInstance().userLatitude!), \"longitude\": \(StudentClient.sharedInstance().userLongitude!)}"
+        print(jsonBody)
         
         /* 2. Make the request */
         taskForPOSTParseMethod(myMethod, parameters: parameters, jsonBody: jsonBody) { (results, error) in
@@ -91,7 +95,6 @@ extension StudentClient {
                 completionHandlerForPOSTStudentLocation(result: nil, error: error)
             } else {
                 if let results = results[StudentClient.JSONResponseKeys.StatusCode] as? Int {
-                    //TODO: Finish POST to parse HERE
                     completionHandlerForPOSTStudentLocation(result: results, error: nil)
                 } else {
                     completionHandlerForPOSTStudentLocation(result: nil, error: NSError(domain: "postStudentLocation parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse postStudentLocation"]))

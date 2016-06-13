@@ -16,9 +16,14 @@ class StudentClient : NSObject {
     var session = NSURLSession.sharedSession()
     
     // authentication state
-    var requestToken: String? = nil
     var sessionID: String? = nil
     var userID: String? = nil
+    var userFirstName: String? = nil
+    var userLastName: String? = nil
+    var userMediaURL: String? = nil
+    var userMapString: String? = nil
+    var userLatitude: Double? = nil
+    var userLongitude: Double? = nil
     
     // MARK: Initializers
     
@@ -79,7 +84,7 @@ class StudentClient : NSObject {
     }
 
     
-    // TODO: Determine if I need this method***********************///////////////////////////////////////////////////*************************//////////////////////////
+    // Use to get Public User Data for InfoPostVC - firstName, lastName
     func taskForGETUdacity(method: String, parameters: [String:AnyObject], completionHandlerForGET: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         
         /* 1. Set the parameters */
@@ -118,7 +123,7 @@ class StudentClient : NSObject {
             /* 5/6. Parse the data and use the data (happens in completion handler) */
             let newData = data.subdataWithRange(NSMakeRange(5, data.length - 5)) /* subset response data! */
             print(NSString(data: newData, encoding: NSUTF8StringEncoding))
-            self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandlerForGET)
+            self.convertDataWithCompletionHandler(newData, completionHandlerForConvertData: completionHandlerForGET)
         }
         
         /* 7. Start the request */
