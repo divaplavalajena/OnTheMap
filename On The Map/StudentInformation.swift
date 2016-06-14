@@ -64,5 +64,5 @@ struct StudentInfo {
 extension StudentInfo: Equatable {}
 
 func ==(lhs: StudentInfo, rhs: StudentInfo) -> Bool {
-    return lhs.objectID == rhs.objectID
+    return lhs.uniqueKey == rhs.uniqueKey
 }

@@ -29,7 +29,26 @@ class TableTabViewController: UIViewController {
     
     @IBAction func newLocationButton(sender: AnyObject) {
         //Check for objectID and if its not nil, then prompt alert view for overwrite/re-entry of student location
-        
+        if StudentClient.sharedInstance().userObjectID != nil {
+            //alert view asking if you wish to overwrite record
+                // create the alert
+            let alert = UIAlertController(title: "Overwrite?", message: "User \(StudentClient.sharedInstance().userFirstName!) \(StudentClient.sharedInstance().userLastName!) has already posted a Student Location. Would you like to Overwrite the Location?", preferredStyle: UIAlertControllerStyle.Alert)
+            
+            // add the actions (buttons)
+            alert.addAction(UIAlertAction(title: "Overwrite", style: UIAlertActionStyle.Default, handler: { (action) in
+                let controller = self.storyboard!.instantiateViewControllerWithIdentifier("InfoPostViewController") as! InfoPostViewController
+                self.presentViewController(controller, animated: true, completion: nil)
+            }))
+            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
+            
+            // show the alert
+            self.presentViewController(alert, animated: true, completion: nil)
+            
+        } else {
+            let controller = self.storyboard!.instantiateViewControllerWithIdentifier("InfoPostViewController") as! InfoPostViewController
+            presentViewController(controller, animated: true, completion: nil)
+        }
+
     }
     
     @IBAction func refreshButton(sender: AnyObject) {

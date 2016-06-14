@@ -168,7 +168,7 @@ extension StudentClient {
             /* 3. Send the desired value(s) to completion handler */
             if let error = error {
                 print(error)
-                completionHandlerForSession(success: false, sessionID: nil, userID: nil, errorString: "Login Failed (Session ID, UserID).")
+                completionHandlerForSession(success: false, sessionID: nil, userID: nil, errorString: "Login Failed - incorrect username and/or password.")
             } else {
                 if let sessionCategory = results[StudentClient.JSONResponseKeys.SessionCategory] as? [String: AnyObject] {
                     if let sessionID = sessionCategory[StudentClient.JSONResponseKeys.SessionID] as? String,
@@ -182,7 +182,7 @@ extension StudentClient {
                     }
                 } else {
                     print("Could not find \(StudentClient.JSONResponseKeys.SessionID) in \(results)")
-                    completionHandlerForSession(success: false, sessionID: nil, userID: nil, errorString: "Login Failed (Session ID).")
+                    completionHandlerForSession(success: false, sessionID: nil, userID: nil, errorString: "Login Failed (Session ID, UserID).")
                 }
             }
         }

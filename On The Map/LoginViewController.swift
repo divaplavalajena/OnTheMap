@@ -50,6 +50,12 @@ class LoginViewController: UIViewController {
                             
                         }
                     })
+                } else {
+                    performUIUpdatesOnMain({
+                        self.activityIndicatorView.stopAnimating()
+                        self.displayError(errorString)
+                        self.setUIEnabled(true)
+                    })
                 }
             })
         }
@@ -57,6 +63,10 @@ class LoginViewController: UIViewController {
     
 
     @IBAction func signUpButton(sender: AnyObject) {
+        let app = UIApplication.sharedApplication()
+        if let toOpen: String = "https://www.udacity.com/account/auth#!/signup" {
+            app.openURL(NSURL(string: toOpen)!)
+        }
     }
     
     //MARK: View methods
@@ -82,7 +92,15 @@ class LoginViewController: UIViewController {
 
     private func displayError(errorString: String?) {
         if let errorString = errorString {
-            debugTextLabel.text = errorString
+            //debugTextLabel.text = errorString //****************************************************************************************************************************************
+            // create the alert
+            let alert = UIAlertController(title: "Login failed.", message: "\(errorString) Please try again.", preferredStyle: UIAlertControllerStyle.Alert)
+            
+            // add an action (button)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+            
+            // show the alert
+            self.presentViewController(alert, animated: true, completion: nil)
         }
     }
 

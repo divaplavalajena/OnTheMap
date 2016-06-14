@@ -28,9 +28,20 @@ class InfoPostViewController: UIViewController, MKMapViewDelegate, UITextViewDel
         activityIndicator.startAnimating()
         
         // Forward Geocode the string from the locationTextView and pass to map
-        if locationTextView.text == nil {
-            print("no address to geocode - please enter an location")
+        if locationTextView.text == nil || locationTextView.text == "Enter Your Location Here" {
+            print("no address to geocode - please enter an location") //*******************************************************************************************************
+            
+            // create the alert
+            let alert = UIAlertController(title: "No location detected.", message: "Please enter a location or address to continue submission.", preferredStyle: UIAlertControllerStyle.Alert)
+            
+            // add an action (button)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+            
+            // show the alert
+            self.presentViewController(alert, animated: true, completion: nil)
+            
         } else {
+            //forward geocoding alert view if geocoding fails - within forwardGeocoding function closure but on a main thread since alert is a UI update
             forwardGeocoding(locationTextView.text)
             StudentClient.sharedInstance().userMapString = locationTextView.text
             activityIndicator.stopAnimating()
@@ -56,10 +67,18 @@ class InfoPostViewController: UIViewController, MKMapViewDelegate, UITextViewDel
     @IBOutlet var submitOutlet: UIButton!
     @IBAction func submitButton(sender: AnyObject) {
         
-        //TODO: Gather firstName, lastName, and mapURL to save in post to parse
-        if linkEntryTextView.text == nil {
+        if linkEntryTextView.text == nil || linkEntryTextView.text == "Enter a Link to Share Here" {
             print("no link entry to save for post to parse - please enter an location")
-            //TODO: Insert an alert view here
+            
+            // create the alert
+            let alert = UIAlertController(title: "No link URL detected.", message: "Please enter a link to continue submission.", preferredStyle: UIAlertControllerStyle.Alert)
+            
+            // add an action (button)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+            
+            // show the alert
+            self.presentViewController(alert, animated: true, completion: nil)
+            
         } else {
             StudentClient.sharedInstance().userMediaURL = linkEntryTextView.text
             if StudentClient.sharedInstance().userMediaURL != nil {
@@ -68,8 +87,16 @@ class InfoPostViewController: UIViewController, MKMapViewDelegate, UITextViewDel
                         if let userInfo = result {
                             print("There were no errors posting userInfo to parse: \(userInfo)")
                         } else {
-                            //TODO: create alert view that warns user info not posted to parse - try again
                             print(error)
+                            
+                            // create the alert
+                            let alert = UIAlertController(title: "Data submission failed", message: "Student Location data failed to update. Please try again.", preferredStyle: UIAlertControllerStyle.Alert)
+                            
+                            // add an action (button)
+                            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                            
+                            // show the alert
+                            self.presentViewController(alert, animated: true, completion: nil)
                         }
                     }
                 }
@@ -143,9 +170,16 @@ class InfoPostViewController: UIViewController, MKMapViewDelegate, UITextViewDel
         CLGeocoder().geocodeAddressString(address, completionHandler: { (placemarks, error) in
             if error != nil {
                 print(error)
-                
-                //TODO: Place alert view here for error in forward geocoding location
-                
+                performUIUpdatesOnMain({ 
+                    // create the alert
+                    let alert = UIAlertController(title: "Location geocoding failed.", message: "Location or address failed to properly forward geocode. Please try again.", preferredStyle: UIAlertControllerStyle.Alert)
+                    
+                    // add an action (button)
+                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                    
+                    // show the alert
+                    self.presentViewController(alert, animated: true, completion: nil)
+                })
                 return
             }
             if placemarks?.count > 0 {
