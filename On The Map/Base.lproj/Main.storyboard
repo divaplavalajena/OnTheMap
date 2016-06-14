@@ -36,7 +36,7 @@
                                             </barButtonItem>
                                             <barButtonItem image="pin" id="BeE-a1-z1n" userLabel="Location Button Segue">
                                                 <connections>
-                                                    <segue destination="yXM-au-uxn" kind="presentation" id="A4k-Bj-WWW"/>
+                                                    <action selector="newLocationButton:" destination="9pv-A4-QxB" id="qdt-yx-O9n"/>
                                                 </connections>
                                             </barButtonItem>
                                         </rightBarButtonItems>
@@ -74,7 +74,7 @@
         <!--InfoPostViewController-->
         <scene sceneID="ask-tg-gXJ">
             <objects>
-                <viewController id="yXM-au-uxn" userLabel="InfoPostViewController" customClass="InfoPostViewController" customModule="On_The_Map" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="InfoPostViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="yXM-au-uxn" userLabel="InfoPostViewController" customClass="InfoPostViewController" customModule="On_The_Map" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="KC7-Y3-YAq"/>
                         <viewControllerLayoutGuide type="bottom" id="asm-fw-ZeE"/>
@@ -286,7 +286,7 @@ today?</string>
                                             </barButtonItem>
                                             <barButtonItem image="pin" id="EN4-0a-obP" userLabel="Location Button Segue">
                                                 <connections>
-                                                    <segue destination="yXM-au-uxn" kind="presentation" id="hyj-ql-ni2"/>
+                                                    <action selector="newLocationButton:" destination="8rJ-Kc-sve" id="xa9-1k-J6e"/>
                                                 </connections>
                                             </barButtonItem>
                                         </rightBarButtonItems>
@@ -347,7 +347,7 @@ today?</string>
                                 </constraints>
                                 <color key="textColor" red="1" green="0.39046720530000001" blue="0.05642144801" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
                                 <variation key="heightClass=regular-widthClass=compact">
                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 </variation>
@@ -360,7 +360,7 @@ today?</string>
                                 </constraints>
                                 <color key="textColor" red="1" green="0.39046720530000001" blue="0.05642144801" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" secureTextEntry="YES"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mwm-BI-TUP" userLabel="Login Button">
                                 <rect key="frame" x="168" y="322" width="264" height="44"/>
@@ -503,7 +503,4 @@ today?</string>
         <image name="pin" width="32" height="32"/>
         <image name="udacity" width="256" height="256"/>
     </resources>
-    <inferredMetricsTieBreakers>
-        <segue reference="hyj-ql-ni2"/>
-    </inferredMetricsTieBreakers>
 </document>

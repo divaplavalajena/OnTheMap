@@ -66,7 +66,7 @@ class InfoPostViewController: UIViewController, MKMapViewDelegate, UITextViewDel
                 StudentClient.sharedInstance().postStudentLocationToParse { (result, error) in
                     performUIUpdatesOnMain {
                         if let userInfo = result {
-                            print("There were no erros posting userInfo to parse: \(userInfo)")
+                            print("There were no errors posting userInfo to parse: \(userInfo)")
                         } else {
                             //TODO: create alert view that warns user info not posted to parse - try again
                             print(error)
@@ -134,19 +134,6 @@ class InfoPostViewController: UIViewController, MKMapViewDelegate, UITextViewDel
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
-        StudentClient.sharedInstance().getUdacityPublicUserData { (result, error) in
-            performUIUpdatesOnMain {
-                if let userInfo = result {
-                    print("There were no erros gathering user info. It contains \(userInfo.count) entries.")
-                } else {
-                    //TODO: create alert view that warns user info not gathered - try again, and dismiss VC
-                    print(error)
-                }
-                
-            }
-        }
-        
 
     }
     
@@ -175,7 +162,7 @@ class InfoPostViewController: UIViewController, MKMapViewDelegate, UITextViewDel
                 StudentClient.sharedInstance().userLongitude = coordLong
                 
                 //print for testing
-                print("\nlat: \(coordinate!.latitude), long: \(coordinate!.longitude)")
+                //print("\nlat: \(coordinate!.latitude), long: \(coordinate!.longitude)")*********************************************************************************
                 
                 //create objects containing annotation data to add to map
                 var annotations = [MKPointAnnotation]()

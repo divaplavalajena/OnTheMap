@@ -27,6 +27,10 @@ class TableTabViewController: UIViewController {
         dismissViewControllerAnimated(true, completion: nil)
     }
     
+    @IBAction func newLocationButton(sender: AnyObject) {
+        //Check for objectID and if its not nil, then prompt alert view for overwrite/re-entry of student location
+        
+    }
     
     @IBAction func refreshButton(sender: AnyObject) {
         loadStudentData()

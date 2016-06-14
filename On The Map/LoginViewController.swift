@@ -31,16 +31,25 @@ class LoginViewController: UIViewController {
             
             activityIndicatorView.startAnimating()
             
-            StudentClient.sharedInstance().udacityPOSTSession(usernameTextField.text!, password: passwordTextField.text!, completionHandlerForSession: { (success, sessionID, errorString) in
-                performUIUpdatesOnMain {
-                    if success {
-                        self.completeLogin()
-                    } else {
-                        self.activityIndicatorView.stopAnimating()
-                        self.displayError(errorString)
-                        self.setUIEnabled(true)
-                    }
-
+            //Create a session on udacity - LOGIN
+            StudentClient.sharedInstance().udacityPOSTSession(usernameTextField.text!, password: passwordTextField.text!, completionHandlerForSession: { (success, sessionID, userID, errorString) in
+                if success {
+                    
+                    //Get Udacity public user data from userID in previous method that you'll use later - firstName, lastName, etc.
+                    StudentClient.sharedInstance().getUdacityPublicUserData({ (result, error) in
+                        
+                        //All UI updates need to be on main thread since all closures run on background threads - so thread must be specified here.
+                        performUIUpdatesOnMain {
+                            if success {
+                                self.completeLogin()
+                            } else {
+                                self.activityIndicatorView.stopAnimating()
+                                self.displayError(errorString)
+                                self.setUIEnabled(true)
+                            }
+                            
+                        }
+                    })
                 }
             })
         }
