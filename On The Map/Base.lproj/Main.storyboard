@@ -63,6 +63,7 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Map" image="Map" id="acW-dT-cKf"/>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
                     <connections>
                         <outlet property="mapView" destination="oit-va-Cyf" id="etq-OB-0Dq"/>
                     </connections>
@@ -205,6 +206,7 @@ today?</string>
                             <constraint firstAttribute="trailingMargin" secondItem="jzg-Kt-oen" secondAttribute="trailing" constant="5" id="wMa-0Z-Qbn"/>
                         </constraints>
                     </view>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
                     <connections>
                         <outlet property="activityIndicator" destination="auH-Wc-Z0x" id="kcj-VN-jzR"/>
                         <outlet property="cancelOutlet" destination="jzg-Kt-oen" id="unq-tF-e5C"/>
@@ -306,6 +308,7 @@ today?</string>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="List" image="List" id="cPa-gy-q4n"/>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
                     <connections>
                         <outlet property="tableView" destination="wXx-ec-KTc" id="5z6-He-J1M"/>
                     </connections>
@@ -328,6 +331,9 @@ today?</string>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="udacity" translatesAutoresizingMaskIntoConstraints="NO" id="t6R-J5-Pmh">
                                 <rect key="frame" x="168" y="28" width="264" height="147"/>
+                                <variation key="heightClass=compact" ambiguous="YES" misplaced="YES">
+                                    <rect key="frame" x="168" y="28" width="264" height="0.0"/>
+                                </variation>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login to Udacity" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cWr-2F-Xiq">
                                 <rect key="frame" x="208" y="183" width="185" height="21"/>
@@ -338,6 +344,9 @@ today?</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
+                                <variation key="heightClass=compact" ambiguous="YES" misplaced="YES">
+                                    <rect key="frame" x="208" y="36" width="185" height="21"/>
+                                </variation>
                             </label>
                             <textField clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="Email" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="6tE-Yt-mHX">
                                 <rect key="frame" x="168" y="218" width="264" height="44"/>
@@ -348,6 +357,9 @@ today?</string>
                                 <color key="textColor" red="1" green="0.39046720530000001" blue="0.05642144801" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
+                                <variation key="heightClass=compact" ambiguous="YES" misplaced="YES">
+                                    <rect key="frame" x="168" y="71" width="264" height="44"/>
+                                </variation>
                                 <variation key="heightClass=regular-widthClass=compact">
                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 </variation>
@@ -361,6 +373,9 @@ today?</string>
                                 <color key="textColor" red="1" green="0.39046720530000001" blue="0.05642144801" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" enablesReturnKeyAutomatically="YES" secureTextEntry="YES"/>
+                                <variation key="heightClass=compact" ambiguous="YES" misplaced="YES">
+                                    <rect key="frame" x="168" y="108" width="264" height="44"/>
+                                </variation>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mwm-BI-TUP" userLabel="Login Button">
                                 <rect key="frame" x="168" y="322" width="264" height="44"/>
@@ -372,6 +387,9 @@ today?</string>
                                 <state key="normal" title="Login">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <variation key="heightClass=compact" ambiguous="YES" misplaced="YES">
+                                    <rect key="frame" x="168" y="160" width="264" height="44"/>
+                                </variation>
                                 <connections>
                                     <action selector="loginButton:" destination="XlA-4K-ViN" eventType="touchUpInside" id="WVj-Pw-Cor"/>
                                 </connections>
@@ -389,6 +407,9 @@ today?</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
+                                <variation key="heightClass=compact" misplaced="YES">
+                                    <rect key="frame" x="168" y="218" width="181" height="30"/>
+                                </variation>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oZv-no-Riy" userLabel="Sign Up Button">
                                 <rect key="frame" x="357" y="380" width="75" height="30"/>
@@ -401,6 +422,9 @@ today?</string>
                                 <state key="normal" title="Sign Up">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <variation key="heightClass=compact" misplaced="YES">
+                                    <rect key="frame" x="357" y="218" width="75" height="30"/>
+                                </variation>
                                 <connections>
                                     <action selector="signUpButton:" destination="XlA-4K-ViN" eventType="touchUpInside" id="dSj-Eg-EA1"/>
                                 </connections>
@@ -413,9 +437,15 @@ today?</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
+                                <variation key="heightClass=compact" misplaced="YES">
+                                    <rect key="frame" x="168" y="274" width="264" height="0.0"/>
+                                </variation>
                             </label>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="4bb-hP-WNF">
                                 <rect key="frame" x="282" y="409" width="37" height="37"/>
+                                <variation key="heightClass=compact" misplaced="YES">
+                                    <rect key="frame" x="282" y="247" width="37" height="37"/>
+                                </variation>
                             </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="0.5683350253984758" blue="0.055696151075287914" alpha="1" colorSpace="calibratedRGB"/>
@@ -465,6 +495,7 @@ today?</string>
                             <constraint firstItem="mwm-BI-TUP" firstAttribute="leading" secondItem="Odc-nh-Cvm" secondAttribute="leading" id="sJw-Tr-84C"/>
                         </constraints>
                     </view>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
                     <connections>
                         <outlet property="activityIndicatorView" destination="4bb-hP-WNF" id="fUS-6X-cv2"/>
                         <outlet property="debugTextLabel" destination="KbM-cE-wOW" id="oLj-Tu-l55"/>
@@ -482,6 +513,7 @@ today?</string>
             <objects>
                 <tabBarController storyboardIdentifier="ManagerTabBarController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="49e-Tb-3d3" sceneMemberID="viewController">
                     <nil key="simulatedBottomBarMetrics"/>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="W28-zg-YXA">
                         <rect key="frame" x="0.0" y="975" width="768" height="49"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
