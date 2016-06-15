@@ -11,7 +11,6 @@ import UIKit
 class TableTabViewController: UIViewController {
     
     // MARK: Properties
-    var students: [StudentInfo] = [StudentInfo]()
 
     @IBOutlet var tableView: UITableView!
     
@@ -69,7 +68,7 @@ class TableTabViewController: UIViewController {
         StudentClient.sharedInstance().getStudentLocations { (result, error) in
             performUIUpdatesOnMain{
                 if let students = result {
-                    self.students = students
+                    StudentClient.sharedInstance().studentLocations = students
                     self.tableView.reloadData()
                 } else {
                     print(error)
@@ -91,7 +90,7 @@ extension TableTabViewController: UITableViewDelegate, UITableViewDataSource {
         
         /* Get cell type */
         let cellReuseIdentifier = "Cell"
-        let student = self.students[indexPath.row]
+        let student = StudentClient.sharedInstance().studentLocations[indexPath.row]
         let cell = tableView.dequeueReusableCellWithIdentifier(cellReuseIdentifier) as UITableViewCell!
         
         /* Set cell defaults */
@@ -103,13 +102,13 @@ extension TableTabViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.students.count
+        return StudentClient.sharedInstance().studentLocations.count
     }
     
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let app = UIApplication.sharedApplication()
-        let student = self.students[indexPath.row]
+        let student = StudentClient.sharedInstance().studentLocations[indexPath.row]
         if let toOpen = student.mediaURL {
             app.openURL(NSURL(string: toOpen)!)
         }

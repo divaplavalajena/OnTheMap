@@ -11,8 +11,6 @@ import MapKit
 
 class MapTabViewController: UIViewController, MKMapViewDelegate {
     
-    // MARK: Properties
-    var studentLocations: [StudentInfo] = [StudentInfo]()
     
     @IBOutlet var mapView: MKMapView!
     
@@ -72,7 +70,7 @@ class MapTabViewController: UIViewController, MKMapViewDelegate {
         StudentClient.sharedInstance().getStudentLocations { (result, error) in
             performUIUpdatesOnMain{
                 if let students = result {
-                    self.studentLocations = students
+                    StudentClient.sharedInstance().studentLocations = students
                 } else {
                     print(error)
                     // create the alert
@@ -93,7 +91,7 @@ class MapTabViewController: UIViewController, MKMapViewDelegate {
                 // to create map annotations. This would be more stylish if the dictionaries were being
                 // used to create custom structs. Perhaps StudentLocation structs.
                 
-                for student in self.studentLocations {
+                for student in StudentClient.sharedInstance().studentLocations {
                     
                     // Notice that the float values are being used to create CLLocationDegree values.
                     // This is a version of the Double type.
