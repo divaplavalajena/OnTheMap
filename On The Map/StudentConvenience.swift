@@ -9,7 +9,7 @@
 import UIKit
 import Foundation
 
-// MARK: - TMDBClient (Convenient Resource Methods)
+// MARK: - StudentClient (Convenient Resource Methods)
 
 extension StudentClient {
     
@@ -166,9 +166,12 @@ extension StudentClient {
         taskForPOSTUdacityMethod(myMethod, parameters: parameters, jsonBody: jsonBody) { (results, error) in
             
             /* 3. Send the desired value(s) to completion handler */
-            if let error = error {
+            if var error = error?.localizedDescription {
                 print(error)
-                completionHandlerForSession(success: false, sessionID: nil, userID: nil, errorString: "Login Failed - incorrect username and/or password.")
+                if error != "Incorrect username and/or password" {
+                    error = "The Internet connection appears to be offline"
+                }
+                completionHandlerForSession(success: false, sessionID: nil, userID: nil, errorString: "\(error).")
             } else {
                 if let sessionCategory = results[StudentClient.JSONResponseKeys.SessionCategory] as? [String: AnyObject] {
                     if let sessionID = sessionCategory[StudentClient.JSONResponseKeys.SessionID] as? String,

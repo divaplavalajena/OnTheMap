@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 class LoginViewController: UIViewController {
     
     @IBOutlet var usernameTextField: UITextField!
@@ -15,9 +16,6 @@ class LoginViewController: UIViewController {
     @IBOutlet var passwordTextField: UITextField!
     
     @IBOutlet var debugTextLabel: UILabel!
-    
-    // shared session
-    var session = NSURLSession.sharedSession()
 
     @IBOutlet var activityIndicatorView: UIActivityIndicatorView!
 
@@ -119,14 +117,5 @@ class LoginViewController: UIViewController {
         }
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

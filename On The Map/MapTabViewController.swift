@@ -41,8 +41,10 @@ class MapTabViewController: UIViewController, MKMapViewDelegate {
             
             // add the actions (buttons)
             alert.addAction(UIAlertAction(title: "Overwrite", style: UIAlertActionStyle.Default, handler: { (action) in
-                let controller = self.storyboard!.instantiateViewControllerWithIdentifier("InfoPostViewController") as! InfoPostViewController
-                self.presentViewController(controller, animated: true, completion: nil)
+                performUIUpdatesOnMain{
+                    let controller = self.storyboard!.instantiateViewControllerWithIdentifier("InfoPostViewController") as! InfoPostViewController
+                    self.presentViewController(controller, animated: true, completion: nil)
+                }
             }))
             alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
             
@@ -73,6 +75,14 @@ class MapTabViewController: UIViewController, MKMapViewDelegate {
                     self.studentLocations = students
                 } else {
                     print(error)
+                    // create the alert
+                    let alert = UIAlertController(title: "Download Failed", message: "Student Location information failed to download.  Click Refresh to try again.", preferredStyle: UIAlertControllerStyle.Alert)
+                    
+                    // add the actions (buttons)
+                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil))
+                    
+                    // show the alert
+                    self.presentViewController(alert, animated: true, completion: nil)
                 }
                 
                 // We will create an MKPointAnnotation for each dictionary in "students". The

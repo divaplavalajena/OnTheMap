@@ -24,11 +24,9 @@ class InfoPostViewController: UIViewController, MKMapViewDelegate, UITextViewDel
     
     @IBOutlet var findOnMapOutlet: UIButton!
     @IBAction func findOnMapButton(sender: AnyObject) {
-        activityIndicator.hidden = false
-        activityIndicator.startAnimating()
         
         // Forward Geocode the string from the locationTextView and pass to map
-        if locationTextView.text == nil || locationTextView.text == "Enter Your Location Here" {
+        if locationTextView.text == nil || locationTextView.text == "Enter Your Location Here" || locationTextView.text == "" {
             print("no address to geocode - please enter an location") //*******************************************************************************************************
             
             // create the alert
@@ -41,40 +39,60 @@ class InfoPostViewController: UIViewController, MKMapViewDelegate, UITextViewDel
             self.presentViewController(alert, animated: true, completion: nil)
             
         } else {
+            activityIndicator.hidden = false
+            activityIndicator.startAnimating()
+            
             //forward geocoding alert view if geocoding fails - within forwardGeocoding function closure but on a main thread since alert is a UI update
             forwardGeocoding(locationTextView.text)
             StudentClient.sharedInstance().userMapString = locationTextView.text
             activityIndicator.stopAnimating()
+            
+            studyLabel.hidden = true
+            locationTextView.hidden = true
+            findOnMapOutlet.hidden = true
+            
+            view.backgroundColor = UIColor(red: 0.46666667, green: 0.71764706, blue: 0.90196078, alpha: 1.0)
+            mapView.hidden = false
+            linkEntryTextView.hidden = false
+            linkEntryTextView.text = "Enter a Link to Share Here"
+            linkEntryTextView.textColor = UIColor.whiteColor()
+            submitOutlet.hidden = false
+            
+            cancelOutlet.hidden = false
+            cancelOutlet.titleLabel!.textColor = UIColor.whiteColor()
         }
 
-        
-        studyLabel.hidden = true
-        locationTextView.hidden = true
-        findOnMapOutlet.hidden = true
-        
-        view.backgroundColor = UIColor(red: 0.46666667, green: 0.71764706, blue: 0.90196078, alpha: 1.0)
-        mapView.hidden = false
-        linkEntryTextView.hidden = false
-        linkEntryTextView.text = "Enter a Link to Share Here"
-        linkEntryTextView.textColor = UIColor.whiteColor()
-        submitOutlet.hidden = false
-        
-        cancelOutlet.hidden = false
-        cancelOutlet.titleLabel!.textColor = UIColor.whiteColor()
-        
     }
     
     @IBOutlet var submitOutlet: UIButton!
     @IBAction func submitButton(sender: AnyObject) {
         
-        if linkEntryTextView.text == nil || linkEntryTextView.text == "Enter a Link to Share Here" {
-            print("no link entry to save for post to parse - please enter an location")
+        if linkEntryTextView.text == nil || linkEntryTextView.text == "Enter a Link to Share Here" || linkEntryTextView.text == "" {
+            //print("no link entry to save for post to parse - please enter an location")****************************************************************************************************
             
             // create the alert
             let alert = UIAlertController(title: "No link URL detected.", message: "Please enter a link to continue submission.", preferredStyle: UIAlertControllerStyle.Alert)
             
             // add an action (button)
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: { (action) in
+                performUIUpdatesOnMain{
+                    self.activityIndicator.stopAnimating()
+                    self.studyLabel.hidden = true
+                    self.locationTextView.hidden = true
+                    self.findOnMapOutlet.hidden = true
+                    
+                    self.view.backgroundColor = UIColor(red: 0.46666667, green: 0.71764706, blue: 0.90196078, alpha: 1.0)
+                    self.mapView.hidden = false
+                    self.linkEntryTextView.hidden = false
+                    self.linkEntryTextView.becomeFirstResponder()
+                    self.linkEntryTextView.text = "Enter a Link to Share Here"
+                    self.linkEntryTextView.textColor = UIColor.whiteColor()
+                    self.submitOutlet.hidden = false
+                    
+                    self.cancelOutlet.hidden = false
+                    self.cancelOutlet.titleLabel!.textColor = UIColor.whiteColor()
+                }
+            }))
             
             // show the alert
             self.presentViewController(alert, animated: true, completion: nil)
@@ -101,9 +119,11 @@ class InfoPostViewController: UIViewController, MKMapViewDelegate, UITextViewDel
                     }
                 }
             }
+            performUIUpdatesOnMain{
+                self.activityIndicator.hidden = true
+                self.dismissViewControllerAnimated(true, completion: nil)
+            }
         }
-        activityIndicator.hidden = true
-        dismissViewControllerAnimated(true, completion: nil)
     }
     
     @IBOutlet var linkEntryTextView: UITextView!
@@ -143,7 +163,7 @@ class InfoPostViewController: UIViewController, MKMapViewDelegate, UITextViewDel
     
     
     override func viewWillAppear(animated: Bool) {
-        //view.backgroundColor = UIColor(red: 230.0, green: 230.0, blue: 230.0, alpha: 1.0)
+        
         studyLabel.hidden = false
         locationTextView.hidden = false
         locationTextView.text = "Enter Your Location Here"
@@ -170,16 +190,19 @@ class InfoPostViewController: UIViewController, MKMapViewDelegate, UITextViewDel
         CLGeocoder().geocodeAddressString(address, completionHandler: { (placemarks, error) in
             if error != nil {
                 print(error)
-                performUIUpdatesOnMain({ 
+                performUIUpdatesOnMain{
                     // create the alert
                     let alert = UIAlertController(title: "Location geocoding failed.", message: "Location or address failed to properly forward geocode. Please try again.", preferredStyle: UIAlertControllerStyle.Alert)
                     
                     // add an action (button)
-                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-                    
+                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: { (action) in
+                        self.dismissViewControllerAnimated(true, completion: nil)
+                    }))
+
                     // show the alert
                     self.presentViewController(alert, animated: true, completion: nil)
-                })
+                    
+                }
                 return
             }
             if placemarks?.count > 0 {
@@ -243,35 +266,5 @@ class InfoPostViewController: UIViewController, MKMapViewDelegate, UITextViewDel
         return pinView
     }
     
-    /*
-    // This delegate method is implemented to respond to taps. It opens the system browser
-    // to the URL specified in the annotationViews subtitle property.
-    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        if control == view.rightCalloutAccessoryView {
-            let app = UIApplication.sharedApplication()
-            if let toOpen = view.annotation?.subtitle! {
-                app.openURL(NSURL(string: toOpen)!)
-            }
-        }
-    }
-    */
-    
-    //    func mapView(mapView: MKMapView, annotationView: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-    //
-    //        if control == annotationView.rightCalloutAccessoryView {
-    //            let app = UIApplication.sharedApplication()
-    //            app.openURL(NSURL(string: annotationView.annotation.subtitle))
-    //        }
-    //    }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
