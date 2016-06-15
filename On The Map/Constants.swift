@@ -42,7 +42,7 @@ extension StudentClient {
     struct ParameterKeys {
         static let ParseLimit100 = "limit"
         //static let ParseSkip = "?limit=200&skip=400"
-        //static let ParseOrder = "?order=-updatedAt"
+        static let ParseOrder = "order"
         
     }
     

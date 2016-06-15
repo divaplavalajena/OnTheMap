@@ -35,7 +35,7 @@ class StudentClient : NSObject {
     
     // MARK: GET
     
-    //Works with getStudentLocations method
+    //Works with getStudentLocations method for MapTabVC and getStudentLocationsSort method for TableTabVC
     func taskForGETMethod(method: String, parameters: [String:AnyObject], completionHandlerForGET: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         
         /* 1. Set the parameters */
@@ -43,7 +43,7 @@ class StudentClient : NSObject {
         
         /* 2/3. Build the URL, Configure the request */
         let request = NSMutableURLRequest(URL: parseURLFromParameters(parameters, withPathExtension: method))
-        //print(request)*******************************************************************************************************************************************************
+        print(request) //*******************************************************************************************************************************************************
         request.addValue(StudentClient.Constants.ParseApiKey, forHTTPHeaderField: "X-Parse-Application-Id")
         request.addValue(StudentClient.Constants.RESTApiKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
         

@@ -15,7 +15,32 @@ extension StudentClient {
     
     // MARK: GET Convenience Methods
     
-    //Used on MapTabVC and TableTabVC to get student locations for pins
+    //Used on TableTabVC to get student locations for cells - sorted in order from most recent to oldest
+    func getStudentLocationsSort(completionHandlerForStudentLocationsSort: (result: [StudentInfo]?, error: NSError?) -> Void) {
+        
+        /* 1. Specify parameters, method (if has {key}), and HTTP body (if POST) */
+        let parameters = [StudentClient.ParameterKeys.ParseOrder: "-\(StudentClient.JSONResponseKeys.UpdatedAt)"]
+        let myMethod: String = StudentClient.Constants.ParseMethod
+        
+        /* 2. Make the request */
+        taskForGETMethod(myMethod, parameters: parameters) { (results, error) in
+            
+            /* 3. Send the desired value(s) to completion handler */
+            if let error = error {
+                completionHandlerForStudentLocationsSort(result: nil, error: error)
+            } else {
+                if let results = results[StudentClient.JSONResponseKeys.StudentResults] as? [[String:AnyObject]] {
+                    let students = StudentInfo.studentsFromResults(results)
+                    completionHandlerForStudentLocationsSort(result: students, error: nil)
+                } else {
+                    completionHandlerForStudentLocationsSort(result: nil, error: NSError(domain: "getStudentLocations parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getStudentLocations"]))
+                }
+            }
+        }
+    }
+
+    
+    //Used on MapTabVC to get student locations for pins
     func getStudentLocations(completionHandlerForStudentLocations: (result: [StudentInfo]?, error: NSError?) -> Void) {
         
         /* 1. Specify parameters, method (if has {key}), and HTTP body (if POST) */

@@ -56,12 +56,13 @@ class MapTabViewController: UIViewController, MKMapViewDelegate {
         
     }
     
+    override func viewWillAppear(animated: Bool) {
+        loadStudentPins()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
-        loadStudentPins()
-        
     }
 
     func loadStudentPins() {

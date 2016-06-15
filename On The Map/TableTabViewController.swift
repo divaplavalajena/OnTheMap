@@ -65,7 +65,7 @@ class TableTabViewController: UIViewController {
 
     
     func loadStudentData() {
-        StudentClient.sharedInstance().getStudentLocations { (result, error) in
+        StudentClient.sharedInstance().getStudentLocationsSort { (result, error) in
             performUIUpdatesOnMain{
                 if let students = result {
                     StudentClient.sharedInstance().studentLocations = students
