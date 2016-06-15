@@ -11,6 +11,9 @@ import UIKit
 class TableTabViewController: UIViewController {
     
     // MARK: Properties
+    
+    //Listener for Reachability of Network connection
+    var reachability: Reachability? = StudentClient.sharedInstance().reachability
 
     @IBOutlet var tableView: UITableView!
     
@@ -35,8 +38,10 @@ class TableTabViewController: UIViewController {
             
             // add the actions (buttons)
             alert.addAction(UIAlertAction(title: "Overwrite", style: UIAlertActionStyle.Default, handler: { (action) in
-                let controller = self.storyboard!.instantiateViewControllerWithIdentifier("InfoPostViewController") as! InfoPostViewController
-                self.presentViewController(controller, animated: true, completion: nil)
+                performUIUpdatesOnMain{ 
+                    let controller = self.storyboard!.instantiateViewControllerWithIdentifier("InfoPostViewController") as! InfoPostViewController
+                    self.presentViewController(controller, animated: true, completion: nil)
+                }
             }))
             alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
             
@@ -55,6 +60,21 @@ class TableTabViewController: UIViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
+        
+        do {
+            reachability = try Reachability.reachabilityForInternetConnection()
+        } catch {
+            print("Unable to create Reachability")
+            return
+        }
+        
+        
+        do{
+            try reachability?.startNotifier()
+        }catch{
+            print("could not start reachability notifier")
+        }
+        
         loadStudentData()
     }
     
@@ -72,6 +92,31 @@ class TableTabViewController: UIViewController {
                     self.tableView.reloadData()
                 } else {
                     print(error)
+                    
+                    if self.reachability?.currentReachabilityStatus == .NotReachable {
+                        print("The internet is not reachable (error called on TableTabVC)")
+                        
+                        // create the alert
+                        let alert = UIAlertController(title: "Download Failed", message: "Internet connection appears to be offline. Please reconnect and try again.", preferredStyle: UIAlertControllerStyle.Alert)
+                        
+                        // add an action (button)
+                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                        
+                        // show the alert
+                        self.presentViewController(alert, animated: true, completion: nil)
+                    } else {
+                        print("The internet is reachable (error called on TableTabVC)")
+                        
+                        // create the alert
+                        let alert = UIAlertController(title: "Download Failed", message: "Student Location information failed to download.  Please try again.", preferredStyle: UIAlertControllerStyle.Alert)
+                        
+                        // add the actions (buttons)
+                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil))
+                        
+                        // show the alert
+                        self.presentViewController(alert, animated: true, completion: nil)
+                    }
+
                 }
 
             }

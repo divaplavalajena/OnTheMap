@@ -10,6 +10,9 @@ import UIKit
 import MapKit
 
 class InfoPostViewController: UIViewController, MKMapViewDelegate, UITextViewDelegate {
+    
+    //Listener for Reachability of Network connection
+    var reachability: Reachability? = StudentClient.sharedInstance().reachability
 
     @IBOutlet var mapView: MKMapView!
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
@@ -104,24 +107,34 @@ class InfoPostViewController: UIViewController, MKMapViewDelegate, UITextViewDel
                     performUIUpdatesOnMain {
                         if let userInfo = result {
                             print("There were no errors posting userInfo to parse: \(userInfo)")
+                            self.dismissViewControllerAnimated(true, completion: nil)
                         } else {
                             print(error)
                             
-                            // create the alert
-                            let alert = UIAlertController(title: "Data submission failed", message: "Student Location data failed to update. Please try again.", preferredStyle: UIAlertControllerStyle.Alert)
-                            
-                            // add an action (button)
-                            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-                            
-                            // show the alert
-                            self.presentViewController(alert, animated: true, completion: nil)
+                            if self.reachability?.currentReachabilityStatus == .NotReachable {
+                                print("The internet is not reachable (error called on InfoPostVC)")
+                                
+                                // create the alert
+                                let alert = UIAlertController(title: "Download Failed", message: "Internet connection appears to be offline. Please reconnect and try again.", preferredStyle: UIAlertControllerStyle.Alert)
+                                
+                                // add an action (button)
+                                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                                
+                                // show the alert
+                                self.presentViewController(alert, animated: true, completion: nil)
+                            } else {
+                                // create the alert
+                                let alert = UIAlertController(title: "Data submission failed", message: "Student Location data failed to update. Please try again.", preferredStyle: UIAlertControllerStyle.Alert)
+                                
+                                // add an action (button)
+                                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                                
+                                // show the alert
+                                self.presentViewController(alert, animated: true, completion: nil)
+                            }
                         }
                     }
                 }
-            }
-            performUIUpdatesOnMain{
-                self.activityIndicator.hidden = true
-                self.dismissViewControllerAnimated(true, completion: nil)
             }
         }
     }
@@ -144,6 +157,19 @@ class InfoPostViewController: UIViewController, MKMapViewDelegate, UITextViewDel
         linkEntryTextView.hidden = true
         submitOutlet.hidden = true
         
+        do {
+            reachability = try Reachability.reachabilityForInternetConnection()
+        } catch {
+            print("Unable to create Reachability")
+            return
+        }
+        
+        do{
+            try reachability?.startNotifier()
+        }catch{
+            print("could not start reachability notifier")
+        }
+        
     }
     
     override func viewDidLoad() {
@@ -161,17 +187,35 @@ class InfoPostViewController: UIViewController, MKMapViewDelegate, UITextViewDel
             if error != nil {
                 print(error)
                 performUIUpdatesOnMain{
-                    // create the alert
-                    let alert = UIAlertController(title: "Location geocoding failed.", message: "Location or address failed to properly forward geocode. Please try again.", preferredStyle: UIAlertControllerStyle.Alert)
-                    
-                    // add an action (button)
-                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: { (action) in
-                        self.dismissViewControllerAnimated(true, completion: nil)
-                    }))
-
-                    // show the alert
-                    self.presentViewController(alert, animated: true, completion: nil)
-                    
+                    if self.reachability?.currentReachabilityStatus == .NotReachable {
+                        print("The internet is not reachable (error called on InfoPostVC)")
+                        
+                        // create the alert
+                        let alert = UIAlertController(title: "Location Geocoding Failed", message: "Internet connection appears to be offline. Please reconnect and try again.", preferredStyle: UIAlertControllerStyle.Alert)
+                        
+                        // add an action (button)
+                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: { (action) in
+                            performUIUpdatesOnMain{
+                                self.dismissViewControllerAnimated(true, completion: nil)
+                            }
+                        }))
+                        
+                        // show the alert
+                        self.presentViewController(alert, animated: true, completion: nil)
+                        
+                    } else {
+                        // create the alert
+                        let alert = UIAlertController(title: "Location Geocoding Failed", message: "Location or address failed to properly forward geocode. Please try again.", preferredStyle: UIAlertControllerStyle.Alert)
+                        
+                        // add an action (button)
+                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: { (action) in
+                            performUIUpdatesOnMain{
+                                self.dismissViewControllerAnimated(true, completion: nil)
+                            }
+                        }))
+                        // show the alert
+                        self.presentViewController(alert, animated: true, completion: nil)
+                    }
                 }
                 return
             }

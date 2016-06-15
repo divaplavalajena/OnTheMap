@@ -33,6 +33,10 @@ class StudentClient : NSObject {
         super.init()
     }
     
+    //Listener for Reachability of Network connection
+    var reachability: Reachability?
+
+    
     // MARK: GET
     
     //Works with getStudentLocations method for MapTabVC and getStudentLocationsSort method for TableTabVC
@@ -284,7 +288,7 @@ class StudentClient : NSObject {
             
             /* GUARD: Did we get a successful 2XX response? */
             guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
-                sendError("Incorrect username and/or password")
+                sendError("Your request returned a status code other than 2xx!")
                 print("Incorrect username and/or password caused: Your request returned a status code other than 2xx!")
                 return
             }

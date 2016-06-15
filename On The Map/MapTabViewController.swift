@@ -11,6 +11,9 @@ import MapKit
 
 class MapTabViewController: UIViewController, MKMapViewDelegate {
     
+    //Listener for Reachability of Network connection
+    var reachability: Reachability? = StudentClient.sharedInstance().reachability
+    
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
     
     @IBOutlet var mapView: MKMapView!
@@ -60,7 +63,23 @@ class MapTabViewController: UIViewController, MKMapViewDelegate {
     }
     
     override func viewWillAppear(animated: Bool) {
+        
+        do {
+            reachability = try Reachability.reachabilityForInternetConnection()
+        } catch {
+            print("Unable to create Reachability")
+            return
+        }
+        
+        
+        do{
+            try reachability?.startNotifier()
+        }catch{
+            print("could not start reachability notifier")
+        }
+        
         loadStudentPins()
+
     }
     
     override func viewDidLoad() {
@@ -77,14 +96,29 @@ class MapTabViewController: UIViewController, MKMapViewDelegate {
                     StudentClient.sharedInstance().studentLocations = students
                 } else {
                     print(error)
-                    // create the alert
-                    let alert = UIAlertController(title: "Download Failed", message: "Student Location information failed to download.  Click Refresh to try again.", preferredStyle: UIAlertControllerStyle.Alert)
-                    
-                    // add the actions (buttons)
-                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil))
-                    
-                    // show the alert
-                    self.presentViewController(alert, animated: true, completion: nil)
+                    if self.reachability?.currentReachabilityStatus == .NotReachable {
+                        print("The internet is not reachable (error called on MapTabVC)")
+                        
+                        // create the alert
+                        let alert = UIAlertController(title: "Download Failed", message: "Internet connection appears to be offline. Please reconnect and try again.", preferredStyle: UIAlertControllerStyle.Alert)
+                        
+                        // add an action (button)
+                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                        
+                        // show the alert
+                        self.presentViewController(alert, animated: true, completion: nil)
+                    } else {
+                        print("The internet is reachable (error called on MapTabVC)")
+                        
+                        // create the alert
+                        let alert = UIAlertController(title: "Download Failed", message: "Student Location information failed to download.  Please try again.", preferredStyle: UIAlertControllerStyle.Alert)
+                        
+                        // add the actions (buttons)
+                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil))
+                        
+                        // show the alert
+                        self.presentViewController(alert, animated: true, completion: nil)
+                    }
                 }
                 
                 // We will create an MKPointAnnotation for each dictionary in "students". The

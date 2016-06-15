@@ -11,6 +11,9 @@ import UIKit
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
     
+    //Listener for Reachability of Network connection
+    var reachability: Reachability? = StudentClient.sharedInstance().reachability
+    
     @IBOutlet var usernameTextField: UITextField!
 
     @IBOutlet var passwordTextField: UITextField!
@@ -75,10 +78,27 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         passwordTextField.delegate = self
     }
     
+    override func viewWillAppear(animated: Bool) {
+        subscribeToKeyboardNotifications()
+        
+        do {
+            reachability = try Reachability.reachabilityForInternetConnection()
+        } catch {
+            print("Unable to create Reachability")
+            return
+        }
+        
+        //NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(StudentClient.sharedInstance().reachabilityChanged),name: ReachabilityChangedNotification,object: reachability)
+        do{
+            try reachability?.startNotifier()
+        }catch{
+            print("could not start reachability notifier")
+        }
+    }
+    
     override func viewDidAppear(animated: Bool) {
         super.viewWillAppear(animated)
         setUIEnabled(true)
-        subscribeToKeyboardNotifications()
     }
     
     //MARK: UI Login and other helper methods
@@ -93,15 +113,30 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
 
     private func displayError(errorString: String?) {
         if let errorString = errorString {
-            //debugTextLabel.text = errorString //****************************************************************************************************************************************
-            // create the alert
-            let alert = UIAlertController(title: "Login failed.", message: "\(errorString) Please try again.", preferredStyle: UIAlertControllerStyle.Alert)
+            print(errorString)
             
-            // add an action (button)
-            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-            
-            // show the alert
-            self.presentViewController(alert, animated: true, completion: nil)
+            if reachability?.currentReachabilityStatus == .NotReachable {
+                print("The internet is not reachable (displayError called on LoginVC)")
+                
+                // create the alert
+                let alert = UIAlertController(title: "Login failed.", message: "Internet connection appears to be offline. Please try again.", preferredStyle: UIAlertControllerStyle.Alert)
+                
+                // add an action (button)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                
+                // show the alert
+                self.presentViewController(alert, animated: true, completion: nil)
+            } else {
+                print("The internet is reachable (displayError called on LoginVC)")
+                // create the alert
+                let alert = UIAlertController(title: "Login failed.", message: "Incorrect username and/or password. Please try again.", preferredStyle: UIAlertControllerStyle.Alert)
+                
+                // add an action (button)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                
+                // show the alert
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
         }
     }
 
@@ -163,5 +198,4 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
 
     
-
 }
