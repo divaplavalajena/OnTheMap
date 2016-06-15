@@ -85,7 +85,7 @@ class InfoPostViewController: UIViewController, MKMapViewDelegate, UITextViewDel
                     self.mapView.hidden = false
                     self.linkEntryTextView.hidden = false
                     self.linkEntryTextView.becomeFirstResponder()
-                    self.linkEntryTextView.text = "Enter a Link to Share Here"
+                    self.linkEntryTextView.text = ""
                     self.linkEntryTextView.textColor = UIColor.whiteColor()
                     self.submitOutlet.hidden = false
                     

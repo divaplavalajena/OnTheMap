@@ -11,6 +11,7 @@ import MapKit
 
 class MapTabViewController: UIViewController, MKMapViewDelegate {
     
+    @IBOutlet var activityIndicator: UIActivityIndicatorView!
     
     @IBOutlet var mapView: MKMapView!
     
@@ -27,7 +28,9 @@ class MapTabViewController: UIViewController, MKMapViewDelegate {
     }
 
     @IBAction func refreshButton(sender: AnyObject) {
+        activityIndicator.startAnimating()
         loadStudentPins()
+        activityIndicator.stopAnimating()
     }
     
     @IBAction func newLocationButton(sender: AnyObject) {

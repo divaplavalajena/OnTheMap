@@ -19,7 +19,7 @@ extension StudentClient {
     func getStudentLocationsSort(completionHandlerForStudentLocationsSort: (result: [StudentInfo]?, error: NSError?) -> Void) {
         
         /* 1. Specify parameters, method (if has {key}), and HTTP body (if POST) */
-        let parameters = [StudentClient.ParameterKeys.ParseOrder: "-\(StudentClient.JSONResponseKeys.UpdatedAt)"]
+        let parameters = [StudentClient.ParameterKeys.ParseLimit100: "100", StudentClient.ParameterKeys.ParseOrder: "-\(StudentClient.JSONResponseKeys.UpdatedAt)"]
         let myMethod: String = StudentClient.Constants.ParseMethod
         
         /* 2. Make the request */

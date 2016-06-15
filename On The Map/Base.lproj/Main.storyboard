@@ -49,6 +49,9 @@
                                     <outlet property="delegate" destination="9pv-A4-QxB" id="diP-9T-6Ge"/>
                                 </connections>
                             </mapView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="zjF-7J-MqE">
+                                <rect key="frame" x="282" y="281" width="37" height="37"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -65,6 +68,7 @@
                     <tabBarItem key="tabBarItem" title="Map" image="Map" id="acW-dT-cKf"/>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="zjF-7J-MqE" id="A3M-Qe-2uj"/>
                         <outlet property="mapView" destination="oit-va-Cyf" id="etq-OB-0Dq"/>
                     </connections>
                 </viewController>
@@ -169,7 +173,7 @@ today?</string>
                                     <action selector="submitButton:" destination="yXM-au-uxn" eventType="touchUpInside" id="jj3-EP-tsO"/>
                                 </connections>
                             </button>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="auH-Wc-Z0x">
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="auH-Wc-Z0x">
                                 <rect key="frame" x="282" y="292" width="37" height="37"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="37" id="ckc-8G-SPP"/>
