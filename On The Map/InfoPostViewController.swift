@@ -128,41 +128,9 @@ class InfoPostViewController: UIViewController, MKMapViewDelegate, UITextViewDel
     
     @IBOutlet var linkEntryTextView: UITextView!
     
-    func textViewDidBeginEditing(textView: UITextView) {
-        if locationTextView.hidden == false {
-            locationTextView.becomeFirstResponder()
-            if locationTextView.text == "Enter Your Location Here" {
-                locationTextView.text = ""
-                locationTextView.textColor = UIColor.whiteColor()
-            }
-        }
-        
-        if linkEntryTextView.hidden == false {
-            linkEntryTextView.becomeFirstResponder()
-            if linkEntryTextView.text == "Enter a Link to Share Here" {
-                linkEntryTextView.text = ""
-                linkEntryTextView.textColor = UIColor.whiteColor()
-            }
-        }
-    }
-    
-    func textViewDidEndEditing(textView: UITextView) {
-        if locationTextView.text.isEmpty {
-            locationTextView.text = "Enter Your Location Here"
-            locationTextView.textColor = UIColor.lightGrayColor()
-        }
-        locationTextView.resignFirstResponder()
-        
-        if linkEntryTextView.text.isEmpty {
-            linkEntryTextView.text = "Enter a Link to Share Here"
-            linkEntryTextView.textColor = UIColor.whiteColor()
-        }
-        linkEntryTextView.resignFirstResponder()
-    }
-    
-    
     
     override func viewWillAppear(animated: Bool) {
+        subscribeToKeyboardNotifications()
         
         studyLabel.hidden = false
         locationTextView.hidden = false
@@ -181,7 +149,9 @@ class InfoPostViewController: UIViewController, MKMapViewDelegate, UITextViewDel
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-
+        
+        locationTextView.delegate = self
+        linkEntryTextView.delegate = self
     }
     
     //MARK: - Forward Geocoding address 
@@ -265,6 +235,84 @@ class InfoPostViewController: UIViewController, MKMapViewDelegate, UITextViewDel
         
         return pinView
     }
+    
+    //MARK: Text Field methods
+    func textViewDidBeginEditing(textView: UITextView) {
+        if locationTextView.hidden == false {
+            locationTextView.becomeFirstResponder()
+            if locationTextView.text == "Enter Your Location Here" {
+                locationTextView.text = ""
+                locationTextView.textColor = UIColor.whiteColor()
+            }
+        }
+        
+        if linkEntryTextView.hidden == false {
+            linkEntryTextView.becomeFirstResponder()
+            if linkEntryTextView.text == "Enter a Link to Share Here" {
+                linkEntryTextView.text = ""
+                linkEntryTextView.textColor = UIColor.whiteColor()
+            }
+        }
+    }
+    
+    func textViewDidEndEditing(textView: UITextView) {
+        if locationTextView.text.isEmpty {
+            locationTextView.text = "Enter Your Location Here"
+            locationTextView.textColor = UIColor.lightGrayColor()
+        }
+        locationTextView.resignFirstResponder()
+        
+        if linkEntryTextView.text.isEmpty {
+            linkEntryTextView.text = "Enter a Link to Share Here"
+            linkEntryTextView.textColor = UIColor.whiteColor()
+        }
+        linkEntryTextView.resignFirstResponder()
+    }
+    
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        if(text == "\n") {
+            textView.resignFirstResponder()
+            return false
+        }
+        return true
+    }
+    
+    
+    //MARK: Keyboard methods
+    func subscribeToKeyboardNotifications() {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(LoginViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(LoginViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    func unsubscribeFromKeyboardNotifications() {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+    }
+    
+    func keyboardWillShow(notification: NSNotification) {
+        if locationTextView.isFirstResponder() {
+            self.view.frame.origin.y = getKeyboardHeight(notification) * -1
+        }
+        if linkEntryTextView.isFirstResponder() {
+            self.view.frame.origin.y = getKeyboardHeight(notification) * -1
+        }
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        if locationTextView.isFirstResponder() {
+            self.view.frame.origin.y = 0
+        }
+        if linkEntryTextView.isFirstResponder() {
+            self.view.frame.origin.y = 0
+        }
+    }
+    
+    func getKeyboardHeight(notification: NSNotification) -> CGFloat {
+        let userInfo = notification.userInfo!
+        let keyboardSize = userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue // of CGRect
+        return keyboardSize.CGRectValue().height
+    }
+
     
 
 }
