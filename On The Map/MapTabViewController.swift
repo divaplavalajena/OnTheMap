@@ -93,7 +93,7 @@ class MapTabViewController: UIViewController, MKMapViewDelegate {
         StudentClient.sharedInstance().getStudentLocations { (result, error) in
             performUIUpdatesOnMain{
                 if let students = result {
-                    StudentClient.sharedInstance().studentLocations = students
+                    StudentInfoManager.sharedInstance().studentLocations = students
                 } else {
                     print(error)
                     if self.reachability?.currentReachabilityStatus == .NotReachable {
@@ -129,7 +129,7 @@ class MapTabViewController: UIViewController, MKMapViewDelegate {
                 // to create map annotations. This would be more stylish if the dictionaries were being
                 // used to create custom structs. Perhaps StudentLocation structs.
                 
-                for student in StudentClient.sharedInstance().studentLocations {
+                for student in StudentInfoManager.sharedInstance().studentLocations {
                     
                     // Notice that the float values are being used to create CLLocationDegree values.
                     // This is a version of the Double type.

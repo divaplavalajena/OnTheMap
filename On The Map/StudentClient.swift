@@ -25,7 +25,7 @@ class StudentClient : NSObject {
     var userLatitude: Double? = nil
     var userLongitude: Double? = nil
     var userObjectID: String? = nil
-    var studentLocations: [StudentInfo] = [StudentInfo]()
+    
     
     // MARK: Initializers
     

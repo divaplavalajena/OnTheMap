@@ -29,6 +29,8 @@ struct StudentInfo {
     let createdAt: NSDate?
     let updatedAt: NSDate?
     
+    
+    
     // MARK: Initializers
     
     // construct a StudentInfo from a dictionary
@@ -56,6 +58,7 @@ struct StudentInfo {
         
         return students
     }
+    
 }
 
 
@@ -66,3 +69,5 @@ extension StudentInfo: Equatable {}
 func ==(lhs: StudentInfo, rhs: StudentInfo) -> Bool {
     return lhs.uniqueKey == rhs.uniqueKey
 }
+
+

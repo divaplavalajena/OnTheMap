@@ -10,6 +10,7 @@
 		9CBC42401D0627D80009B2A2 /* StudentClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CBC423F1D0627D80009B2A2 /* StudentClient.swift */; };
 		9CBC42441D0629600009B2A2 /* StudentConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CBC42431D0629600009B2A2 /* StudentConvenience.swift */; };
 		9CBC42461D11E3C20009B2A2 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CBC42451D11E3C20009B2A2 /* Reachability.swift */; };
+		9CBC424A1D147AB90009B2A2 /* StudentInfoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CBC42491D147AB90009B2A2 /* StudentInfoManager.swift */; };
 		9CD60CDD1CFF6BF9005C43BA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD60CDC1CFF6BF9005C43BA /* AppDelegate.swift */; };
 		9CD60CDF1CFF6BF9005C43BA /* MapTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD60CDE1CFF6BF9005C43BA /* MapTabViewController.swift */; };
 		9CD60CE11CFF6BF9005C43BA /* TableTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CD60CE01CFF6BF9005C43BA /* TableTabViewController.swift */; };
@@ -61,6 +62,7 @@
 		9CBC423F1D0627D80009B2A2 /* StudentClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentClient.swift; sourceTree = "<group>"; };
 		9CBC42431D0629600009B2A2 /* StudentConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentConvenience.swift; sourceTree = "<group>"; };
 		9CBC42451D11E3C20009B2A2 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
+		9CBC42491D147AB90009B2A2 /* StudentInfoManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentInfoManager.swift; sourceTree = "<group>"; };
 		9CD60CD91CFF6BF9005C43BA /* On The Map.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "On The Map.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CD60CDC1CFF6BF9005C43BA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9CD60CDE1CFF6BF9005C43BA /* MapTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapTabViewController.swift; sourceTree = "<group>"; };
@@ -211,6 +213,7 @@
 				9CBC423F1D0627D80009B2A2 /* StudentClient.swift */,
 				9CD60D1D1CFF6FAE005C43BA /* Constants.swift */,
 				9CD60D101CFF6CF1005C43BA /* StudentInformation.swift */,
+				9CBC42491D147AB90009B2A2 /* StudentInfoManager.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -390,6 +393,7 @@
 				9CD60D111CFF6CF1005C43BA /* StudentInformation.swift in Sources */,
 				9CD60CE11CFF6BF9005C43BA /* TableTabViewController.swift in Sources */,
 				9CD60CDD1CFF6BF9005C43BA /* AppDelegate.swift in Sources */,
+				9CBC424A1D147AB90009B2A2 /* StudentInfoManager.swift in Sources */,
 				9CBC42461D11E3C20009B2A2 /* Reachability.swift in Sources */,
 				9CD60CDF1CFF6BF9005C43BA /* MapTabViewController.swift in Sources */,
 				9CD60D0F1CFF6CD3005C43BA /* GCDBlackBox.swift in Sources */,
