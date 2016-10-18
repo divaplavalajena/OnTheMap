@@ -73,7 +73,7 @@ extension StudentClient {
                             self.userFirstName = firstName
                             self.userLastName = lastName
                             self.userObjectID = objectID
-                            print("The main user info is: \(self.userFirstName!) \(self.userLastName!) with an objectID of \(self.userObjectID!)")
+                            //print("The main user info is: \(self.userFirstName!) \(self.userLastName!) with an objectID of \(self.userObjectID!)")
                         }
                     }
                     completionHandlerForStudentLocations(students, nil)
@@ -91,7 +91,7 @@ extension StudentClient {
         /* 1. Specify parameters, method (if has {key}), and HTTP body (if POST) */
         let parameters = [String:AnyObject]()
         let mutableMethod: String = "\(Constants.GetPublicUserData)\(StudentClient.sharedInstance().userID!)"
-        print(mutableMethod)
+        //print(mutableMethod)
         
         /* 2. Make the request */
         let _ = taskForGETUdacity(mutableMethod, parameters: parameters) { (results, error) in
@@ -105,8 +105,8 @@ extension StudentClient {
                         let lastName = userInfo[StudentClient.JSONResponseKeys.UserLastName] as? String {
                         self.userFirstName = firstName
                         self.userLastName = lastName
-                        print("User Name is \(self.userFirstName!) \(self.userLastName!)")
-                        print("getUdacityPublicUserData is working in its new location")
+                        //print("User Name is \(self.userFirstName!) \(self.userLastName!)")
+                        //print("getUdacityPublicUserData is working in its new location")
                     }
                     completionHandlerForGetPublicUserData(userInfo, nil)
                     
@@ -126,8 +126,8 @@ extension StudentClient {
         let parameters = [String:AnyObject]()
         let myMethod: String = "\(StudentClient.Constants.ParseMethod)/\(StudentClient.sharedInstance().userObjectID)"
         let jsonBody = "{\"uniqueKey\": \"\(StudentClient.sharedInstance().userID!)\", \"firstName\": \"\(StudentClient.sharedInstance().userFirstName!)\", \"lastName\": \"\(StudentClient.sharedInstance().userLastName!)\",\"mapString\": \"\(StudentClient.sharedInstance().userMapString!)\", \"mediaURL\": \"\(StudentClient.sharedInstance().userMediaURL!)\",\"latitude\": \(StudentClient.sharedInstance().userLatitude!), \"longitude\": \(StudentClient.sharedInstance().userLongitude!)}"
-        print("This is new updateStudentLocationToParse jsonBody:     ")
-        print(jsonBody)
+        //print("This is new updateStudentLocationToParse jsonBody: ")
+        //print(jsonBody)
         
         
         /* 2. Make the request */
@@ -168,7 +168,7 @@ extension StudentClient {
             } else {
                 if let objectID = results?[StudentClient.JSONResponseKeys.ObjectID] as? String {
                     completionHandlerForPOSTStudentLocation(objectID, nil)
-                    print("The result of the postStudentLocationToParse is objectID: \(objectID)")
+                    //print("The result of the postStudentLocationToParse is objectID: \(objectID)")
                     self.userObjectID = objectID
                 } else {
                     completionHandlerForPOSTStudentLocation(nil, NSError(domain: "postStudentLocationToParse parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse postStudentLocationToParse"]))
@@ -204,8 +204,8 @@ extension StudentClient {
                             let userAccount = results[StudentClient.JSONResponseKeys.UserAccount] as? [String: AnyObject] {
                             if let userAccountID = userAccount[StudentClient.JSONResponseKeys.UserAccountID] as? String {
                                 self.userID = userAccountID
-                                print("user account ID is \(self.userID!)")
-                                print("sessionID is \(sessionID)")
+                                //print("user account ID is \(self.userID!)")
+                                //print("sessionID is \(sessionID)")
                                 completionHandlerForSession(true, sessionID, userAccountID, nil)
                             }
                         }
@@ -236,7 +236,7 @@ extension StudentClient {
                 completionHandlerForDeleteSession(false, "Logout Failed.")
             } else {
                 completionHandlerForDeleteSession(true, nil)
-                print("Logout successful")  //*************************************************************************************************
+                //print("Logout successful")
             }
         }
     }

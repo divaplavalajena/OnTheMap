@@ -32,9 +32,6 @@ class StudentClient : NSObject {
     override init() {
         super.init()
     }
-    
-    //Listener for Reachability of Network connection
-    //var reachability: Reachability?
 
     
     // MARK: GET
@@ -47,7 +44,7 @@ class StudentClient : NSObject {
         
         /* 2/3. Build the URL, Configure the request */
         let request = NSMutableURLRequest(url: parseURLFromParameters(parameters, withPathExtension: method))
-        print(request) //*******************************************************************************************************************************************************
+        //print(request)
         request.addValue(StudentClient.Constants.ParseApiKey, forHTTPHeaderField: "X-Parse-Application-Id")
         request.addValue(StudentClient.Constants.RESTApiKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
         
@@ -80,7 +77,7 @@ class StudentClient : NSObject {
             }
             
             /* 5/6. Parse the data and use the data (happens in completion handler) */
-            //print(NSString(data: data, encoding: NSUTF8StringEncoding))**********************************************************************************************
+            //print(NSString(data: data, encoding: String.Encoding.utf8.rawValue))
             self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandlerForGET)
         }
         
@@ -131,7 +128,7 @@ class StudentClient : NSObject {
             let dataLength = data.count
             let r = 5...Int(dataLength)
             let newData = data.subdata(in: Range(r)) /* subset response data! */
-            print(NSString(data: newData, encoding: String.Encoding.utf8.rawValue))  //**********************************************************************************************
+            //print(NSString(data: newData, encoding: String.Encoding.utf8.rawValue))
             self.convertDataWithCompletionHandler(newData, completionHandlerForConvertData: completionHandlerForGET)
         }
         
@@ -156,8 +153,8 @@ class StudentClient : NSObject {
         request.addValue(StudentClient.Constants.RESTApiKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = jsonBody.data(using: String.Encoding.utf8)
-        print("This is the request for the taskForUPDATEParseMethod:       ") //*************************************************************************************************
-        print(request)  //*************************************************************************************************
+        //print("This is the request for the taskForUPDATEParseMethod: ")
+        //print(request)
         
         
         /* 4. Make the request */
@@ -188,7 +185,7 @@ class StudentClient : NSObject {
             }
             
             /* 5/6. Parse the data and use the data (happens in completion handler) */
-            //print(NSString(data: data, encoding: NSUTF8StringEncoding))*************************************************************************************************
+            //print(NSString(data: data, encoding: String.Encoding.utf8.rawValue))
             self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandlerForPOST)
         }
         
@@ -217,7 +214,7 @@ class StudentClient : NSObject {
         request.addValue(StudentClient.Constants.RESTApiKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = jsonBody.data(using: String.Encoding.utf8)
-        //print(request)******************************************************************************************************************************************************
+        //print(request)
         
         
         /* 4. Make the request */
@@ -248,7 +245,7 @@ class StudentClient : NSObject {
             }
             
             /* 5/6. Parse the data and use the data (happens in completion handler) */
-            //print(NSString(data: data, encoding: NSUTF8StringEncoding))**********************************************************************************************
+            //print(NSString(data: data, encoding: String.Encoding.utf8.rawValue))
             self.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandlerForPOST)
         }
         
@@ -271,8 +268,8 @@ class StudentClient : NSObject {
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpBody = jsonBody.data(using: String.Encoding.utf8)
-        print("This is the request from the taskForPOSTUdacityMethod.")
-        print(request)
+        //print("This is the request from the taskForPOSTUdacityMethod.")
+        //print(request)
         
         
         /* 4. Make the request */
@@ -307,8 +304,8 @@ class StudentClient : NSObject {
             let dataLength = data.count
             let r = 5...Int(dataLength)
             let newData = data.subdata(in: Range(r)) /* subset response data! */
-            print("This is the newData in the taskForPOSTUdacityMethod.")
-            print(NSString(data: newData, encoding: String.Encoding.utf8.rawValue))
+            //print("This is the newData in the taskForPOSTUdacityMethod.")
+            //print(NSString(data: newData, encoding: String.Encoding.utf8.rawValue))
             self.convertDataWithCompletionHandler(newData, completionHandlerForConvertData: completionHandlerForPOST)
         }
         
@@ -367,7 +364,7 @@ class StudentClient : NSObject {
             let dataLength = data.count
             let r = 5...Int(dataLength)
             let newData = data.subdata(in: Range(r))  /* subset response data! */
-            print(NSString(data: newData, encoding: String.Encoding.utf8.rawValue)) //*************************************************************************************************
+            //print(NSString(data: newData, encoding: String.Encoding.utf8.rawValue))
             self.convertDataWithCompletionHandler(newData, completionHandlerForConvertData: completionHandlerForDELETE)
         }
         

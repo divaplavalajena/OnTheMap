@@ -248,8 +248,6 @@ class InfoPostViewController: UIViewController, MKMapViewDelegate, UITextViewDel
                 StudentClient.sharedInstance().userLatitude = coordLat
                 StudentClient.sharedInstance().userLongitude = coordLong
                 
-                //print for testing
-                //print("\nlat: \(coordinate!.latitude), long: \(coordinate!.longitude)")*********************************************************************************
                 
                 //create objects containing annotation data to add to map
                 var annotations = [MKPointAnnotation]()

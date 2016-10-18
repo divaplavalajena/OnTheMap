@@ -12,9 +12,6 @@ class TableTabViewController: UIViewController {
     
     // MARK: Properties
     
-    //Listener for Reachability of Network connection
-    //var reachability: Reachability? = StudentClient.sharedInstance().reachability
-
     @IBOutlet var tableView: UITableView!
     
     @IBAction func logoutButton(_ sender: AnyObject) {
