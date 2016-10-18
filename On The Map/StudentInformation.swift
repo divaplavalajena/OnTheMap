@@ -26,8 +26,8 @@ struct StudentInfo {
     let latitude: Double
     let longitude: Double
     
-    let createdAt: NSDate?
-    let updatedAt: NSDate?
+    let createdAt: Date?
+    let updatedAt: Date?
     
     
     
@@ -43,11 +43,11 @@ struct StudentInfo {
         mediaURL = dictionary[StudentClient.JSONResponseKeys.MediaURL] as? String
         latitude = dictionary[StudentClient.JSONResponseKeys.Latitude] as! Double
         longitude = dictionary[StudentClient.JSONResponseKeys.Longitude] as! Double
-        createdAt = dictionary[StudentClient.JSONResponseKeys.CreatedAt] as? NSDate
-        updatedAt = dictionary[StudentClient.JSONResponseKeys.UpdatedAt] as? NSDate
+        createdAt = dictionary[StudentClient.JSONResponseKeys.CreatedAt] as? Date
+        updatedAt = dictionary[StudentClient.JSONResponseKeys.UpdatedAt] as? Date
     }
     
-    static func studentsFromResults(results: [[String:AnyObject]]) -> [StudentInfo] {
+    static func studentsFromResults(_ results: [[String:AnyObject]]) -> [StudentInfo] {
         
         var students = [StudentInfo]()
         

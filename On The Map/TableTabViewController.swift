@@ -13,11 +13,11 @@ class TableTabViewController: UIViewController {
     // MARK: Properties
     
     //Listener for Reachability of Network connection
-    var reachability: Reachability? = StudentClient.sharedInstance().reachability
+    //var reachability: Reachability? = StudentClient.sharedInstance().reachability
 
     @IBOutlet var tableView: UITableView!
     
-    @IBAction func logoutButton(sender: AnyObject) {
+    @IBAction func logoutButton(_ sender: AnyObject) {
         
         StudentClient.sharedInstance().udacityDELETESession { (success, errorString) in
             if success {
@@ -26,53 +26,50 @@ class TableTabViewController: UIViewController {
                 print(errorString)
             }
         }
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func newLocationButton(sender: AnyObject) {
+    @IBAction func newLocationButton(_ sender: AnyObject) {
         //Check for objectID and if its not nil, then prompt alert view for overwrite/re-entry of student location
         if StudentClient.sharedInstance().userObjectID != nil {
             //alert view asking if you wish to overwrite record
                 // create the alert
-            let alert = UIAlertController(title: "Overwrite?", message: "User \(StudentClient.sharedInstance().userFirstName!) \(StudentClient.sharedInstance().userLastName!) has already posted a Student Location. Would you like to Overwrite the Location?", preferredStyle: UIAlertControllerStyle.Alert)
+            let alert = UIAlertController(title: "Overwrite?", message: "User \(StudentClient.sharedInstance().userFirstName!) \(StudentClient.sharedInstance().userLastName!) has already posted a Student Location. Would you like to Overwrite the Location?", preferredStyle: UIAlertControllerStyle.alert)
             
             // add the actions (buttons)
-            alert.addAction(UIAlertAction(title: "Overwrite", style: UIAlertActionStyle.Default, handler: { (action) in
+            alert.addAction(UIAlertAction(title: "Overwrite", style: UIAlertActionStyle.default, handler: { (action) in
                 performUIUpdatesOnMain{ 
-                    let controller = self.storyboard!.instantiateViewControllerWithIdentifier("InfoPostViewController") as! InfoPostViewController
-                    self.presentViewController(controller, animated: true, completion: nil)
+                    let controller = self.storyboard!.instantiateViewController(withIdentifier: "InfoPostViewController") as! InfoPostViewController
+                    self.present(controller, animated: true, completion: nil)
                 }
             }))
-            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
             
             // show the alert
-            self.presentViewController(alert, animated: true, completion: nil)
+            self.present(alert, animated: true, completion: nil)
             
         } else {
-            let controller = self.storyboard!.instantiateViewControllerWithIdentifier("InfoPostViewController") as! InfoPostViewController
-            presentViewController(controller, animated: true, completion: nil)
+            let controller = self.storyboard!.instantiateViewController(withIdentifier: "InfoPostViewController") as! InfoPostViewController
+            present(controller, animated: true, completion: nil)
         }
 
     }
     
-    @IBAction func refreshButton(sender: AnyObject) {
+    @IBAction func refreshButton(_ sender: AnyObject) {
         loadStudentData()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         
-        do {
-            reachability = try Reachability.reachabilityForInternetConnection()
-        } catch {
-            print("Unable to create Reachability")
-            return
-        }
-        
-        
-        do{
-            try reachability?.startNotifier()
-        }catch{
-            print("could not start reachability notifier")
+        if Reachability.connectedToNetwork() == true {
+            print("Internet Connection Available!")
+        } else {
+            print("Internet Connection NOT Available!")
+            let alert = UIAlertController(title: "Internet Connection not available!", message: "Please connect and try again.", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.cancel, handler: { action in
+                self.dismiss(animated: true, completion: nil)
+            }))
+            self.present(alert, animated: true, completion: nil)
         }
         
         loadStudentData()
@@ -93,70 +90,66 @@ class TableTabViewController: UIViewController {
                 } else {
                     print(error)
                     
-                    if self.reachability?.currentReachabilityStatus == .NotReachable {
+                    if Reachability.connectedToNetwork() == false {
                         print("The internet is not reachable (error called on TableTabVC)")
                         
                         // create the alert
-                        let alert = UIAlertController(title: "Download Failed", message: "Internet connection appears to be offline. Please reconnect and try again.", preferredStyle: UIAlertControllerStyle.Alert)
+                        let alert = UIAlertController(title: "Download Failed", message: "Internet connection appears to be offline. Please reconnect and try again.", preferredStyle: UIAlertControllerStyle.alert)
                         
                         // add an action (button)
-                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                         
                         // show the alert
-                        self.presentViewController(alert, animated: true, completion: nil)
+                        self.present(alert, animated: true, completion: nil)
                     } else {
                         print("The internet is reachable (error called on TableTabVC)")
                         
                         // create the alert
-                        let alert = UIAlertController(title: "Download Failed", message: "Student Location information failed to download.  Please try again.", preferredStyle: UIAlertControllerStyle.Alert)
+                        let alert = UIAlertController(title: "Download Failed", message: "Student Location information failed to download.  Please try again.", preferredStyle: UIAlertControllerStyle.alert)
                         
                         // add the actions (buttons)
-                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil))
+                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: nil))
                         
                         // show the alert
-                        self.presentViewController(alert, animated: true, completion: nil)
+                        self.present(alert, animated: true, completion: nil)
                     }
-
                 }
-
             }
         }
     }
-    
-    
-    
 }
 
 
 
 extension TableTabViewController: UITableViewDelegate, UITableViewDataSource {
 
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         /* Get cell type */
         let cellReuseIdentifier = "Cell"
-        let student = StudentInfoManager.sharedInstance().studentLocations[indexPath.row]
-        let cell = tableView.dequeueReusableCellWithIdentifier(cellReuseIdentifier) as UITableViewCell!
+        let student = StudentInfoManager.sharedInstance().studentLocations[(indexPath as NSIndexPath).row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier) as UITableViewCell!
         
         /* Set cell defaults */
         let studentName = "\(student.firstName!) \(student.lastName!)"
-        cell.textLabel!.text = studentName
-        cell.detailTextLabel!.text = student.mediaURL
+        cell?.textLabel!.text = studentName
+        cell?.detailTextLabel!.text = student.mediaURL
         
-        return cell
+        return cell!
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return StudentInfoManager.sharedInstance().studentLocations.count
     }
     
 
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let app = UIApplication.sharedApplication()
-        let student = StudentInfoManager.sharedInstance().studentLocations[indexPath.row]
-        if let toOpen = student.mediaURL {
-            app.openURL(NSURL(string: toOpen)!)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let app = UIApplication.shared
+        let student = StudentInfoManager.sharedInstance().studentLocations[(indexPath as NSIndexPath).row]
+        if let toOpen = URL(string: student.mediaURL!) {
+            app.open(toOpen, options: [:], completionHandler: nil)
         }
+        
     }
 
 

@@ -11,9 +11,6 @@ import UIKit
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
     
-    //Listener for Reachability of Network connection
-    var reachability: Reachability? = StudentClient.sharedInstance().reachability
-    
     @IBOutlet var usernameTextField: UITextField!
 
     @IBOutlet var passwordTextField: UITextField!
@@ -23,7 +20,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var activityIndicatorView: UIActivityIndicatorView!
 
     @IBOutlet var loginButtonOutlet: UIButton!
-    @IBAction func loginButton(sender: AnyObject) {
+    @IBAction func loginButton(_ sender: AnyObject) {
         
         if usernameTextField.text!.isEmpty || passwordTextField.text!.isEmpty {
             debugTextLabel.text = "Username or Password Empty."
@@ -63,11 +60,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
 
-    @IBAction func signUpButton(sender: AnyObject) {
-        let app = UIApplication.sharedApplication()
-        if let toOpen: String = "https://www.udacity.com/account/auth#!/signup" {
-            app.openURL(NSURL(string: toOpen)!)
-        }
+    @IBAction func signUpButton(_ sender: AnyObject) {
+        let app = UIApplication.shared
+        let toOpen = URL(string: "https://www.udacity.com/account/auth#!/signup")
+        app.open(toOpen!, options: [:], completionHandler: nil)
+        
     }
     
     //MARK: View methods
@@ -78,74 +75,73 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         passwordTextField.delegate = self
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         subscribeToKeyboardNotifications()
         
-        do {
-            reachability = try Reachability.reachabilityForInternetConnection()
-        } catch {
-            print("Unable to create Reachability")
-            return
+        if Reachability.connectedToNetwork() == true {
+            print("Internet Connection Available!")
+        } else {
+            print("Internet Connection NOT Available!")
+            let alert = UIAlertController(title: "Internet Connection not available!", message: "Please connect and try again.", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.cancel, handler: { action in
+                self.dismiss(animated: true, completion: nil)
+            }))
+            self.present(alert, animated: true, completion: nil)
         }
+
         
-        //NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(StudentClient.sharedInstance().reachabilityChanged),name: ReachabilityChangedNotification,object: reachability)
-        do{
-            try reachability?.startNotifier()
-        }catch{
-            print("could not start reachability notifier")
-        }
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setUIEnabled(true)
     }
     
     //MARK: UI Login and other helper methods
-    private func completeLogin() {
+    fileprivate func completeLogin() {
         activityIndicatorView.stopAnimating()
         debugTextLabel.text = ""
         //setUIEnabled(true)
-        let controller = self.storyboard!.instantiateViewControllerWithIdentifier("ManagerTabBarController") as! UITabBarController
-        presentViewController(controller, animated: true, completion: nil)
+        let controller = self.storyboard!.instantiateViewController(withIdentifier: "ManagerTabBarController") as! UITabBarController
+        present(controller, animated: true, completion: nil)
         
     }
 
-    private func displayError(errorString: String?) {
+    fileprivate func displayError(_ errorString: String?) {
         if let errorString = errorString {
             print(errorString)
             
-            if reachability?.currentReachabilityStatus == .NotReachable {
+            if Reachability.connectedToNetwork() == false  {
                 print("The internet is not reachable (displayError called on LoginVC)")
                 
                 // create the alert
-                let alert = UIAlertController(title: "Login failed.", message: "Internet connection appears to be offline. Please try again.", preferredStyle: UIAlertControllerStyle.Alert)
+                let alert = UIAlertController(title: "Login failed.", message: "Internet connection appears to be offline. Please try again.", preferredStyle: UIAlertControllerStyle.alert)
                 
                 // add an action (button)
-                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                 
                 // show the alert
-                self.presentViewController(alert, animated: true, completion: nil)
+                self.present(alert, animated: true, completion: nil)
             } else {
                 print("The internet is reachable (displayError called on LoginVC)")
                 // create the alert
-                let alert = UIAlertController(title: "Login failed.", message: "Incorrect username and/or password. Please try again.", preferredStyle: UIAlertControllerStyle.Alert)
+                let alert = UIAlertController(title: "Login failed.", message: "Incorrect username and/or password. Please try again.", preferredStyle: UIAlertControllerStyle.alert)
                 
                 // add an action (button)
-                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                 
                 // show the alert
-                self.presentViewController(alert, animated: true, completion: nil)
+                self.present(alert, animated: true, completion: nil)
             }
         }
     }
 
-    private func setUIEnabled(enabled: Bool) {
-        usernameTextField.enabled = enabled
-        passwordTextField.enabled = enabled
-        loginButtonOutlet.enabled = enabled
+    fileprivate func setUIEnabled(_ enabled: Bool) {
+        usernameTextField.isEnabled = enabled
+        passwordTextField.isEnabled = enabled
+        loginButtonOutlet.isEnabled = enabled
         debugTextLabel.text = ""
-        debugTextLabel.enabled = enabled
+        debugTextLabel.isEnabled = enabled
         
         // adjust login button alpha
         if enabled {
@@ -156,7 +152,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     }
     
     //MARK: Text Field methods
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true;
     }
@@ -164,37 +160,37 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     
     //MARK: Keyboard methods
     func subscribeToKeyboardNotifications() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(LoginViewController.keyboardWillShow(_:)), name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(LoginViewController.keyboardWillHide(_:)), name: UIKeyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(LoginViewController.keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(LoginViewController.keyboardWillHide(_:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
     func unsubscribeFromKeyboardNotifications() {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
-    func keyboardWillShow(notification: NSNotification) {
-        if usernameTextField.isFirstResponder() {
+    func keyboardWillShow(_ notification: Notification) {
+        if usernameTextField.isFirstResponder {
             self.view.frame.origin.y = getKeyboardHeight(notification) * -0.5
         }
-        if passwordTextField.isFirstResponder() {
+        if passwordTextField.isFirstResponder {
             self.view.frame.origin.y = getKeyboardHeight(notification) * -0.5
         }
     }
     
-    func keyboardWillHide(notification: NSNotification) {
-        if usernameTextField.isFirstResponder() {
+    func keyboardWillHide(_ notification: Notification) {
+        if usernameTextField.isFirstResponder {
             self.view.frame.origin.y = 0
         }
-        if passwordTextField.isFirstResponder() {
+        if passwordTextField.isFirstResponder {
             self.view.frame.origin.y = 0
         }
     }
     
-    func getKeyboardHeight(notification: NSNotification) -> CGFloat {
-        let userInfo = notification.userInfo!
+    func getKeyboardHeight(_ notification: Notification) -> CGFloat {
+        let userInfo = (notification as NSNotification).userInfo!
         let keyboardSize = userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue // of CGRect
-        return keyboardSize.CGRectValue().height
+        return keyboardSize.cgRectValue.height
     }
 
     

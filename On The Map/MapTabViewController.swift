@@ -11,14 +11,11 @@ import MapKit
 
 class MapTabViewController: UIViewController, MKMapViewDelegate {
     
-    //Listener for Reachability of Network connection
-    var reachability: Reachability? = StudentClient.sharedInstance().reachability
-    
     @IBOutlet var activityIndicator: UIActivityIndicatorView!
     
     @IBOutlet var mapView: MKMapView!
     
-    @IBAction func logoutButton(sender: AnyObject) {
+    @IBAction func logoutButton(_ sender: AnyObject) {
 
         StudentClient.sharedInstance().udacityDELETESession { (success, errorString) in
             if success {
@@ -27,55 +24,52 @@ class MapTabViewController: UIViewController, MKMapViewDelegate {
                 print(errorString)
             }
         }
-        dismissViewControllerAnimated(true, completion: nil)
+        dismiss(animated: true, completion: nil)
     }
 
-    @IBAction func refreshButton(sender: AnyObject) {
+    @IBAction func refreshButton(_ sender: AnyObject) {
         activityIndicator.startAnimating()
         loadStudentPins()
         activityIndicator.stopAnimating()
     }
     
-    @IBAction func newLocationButton(sender: AnyObject) {
+    @IBAction func newLocationButton(_ sender: AnyObject) {
         //Check for objectID and if its not nil, then prompt alert view for overwrite/re-entry of student location
         if StudentClient.sharedInstance().userObjectID != nil {
             //alert view asking if you wish to overwrite record
                 // create the alert
-            let alert = UIAlertController(title: "Overwrite?", message: "User \(StudentClient.sharedInstance().userFirstName!) \(StudentClient.sharedInstance().userLastName!) has already posted a Student Location. Would you like to Overwrite the Location?", preferredStyle: UIAlertControllerStyle.Alert)
+            let alert = UIAlertController(title: "Overwrite?", message: "User \(StudentClient.sharedInstance().userFirstName!) \(StudentClient.sharedInstance().userLastName!) has already posted a Student Location. Would you like to Overwrite the Location?", preferredStyle: UIAlertControllerStyle.alert)
             
             // add the actions (buttons)
-            alert.addAction(UIAlertAction(title: "Overwrite", style: UIAlertActionStyle.Default, handler: { (action) in
+            alert.addAction(UIAlertAction(title: "Overwrite", style: UIAlertActionStyle.default, handler: { (action) in
                 performUIUpdatesOnMain{
-                    let controller = self.storyboard!.instantiateViewControllerWithIdentifier("InfoPostViewController") as! InfoPostViewController
-                    self.presentViewController(controller, animated: true, completion: nil)
+                    let controller = self.storyboard!.instantiateViewController(withIdentifier: "InfoPostViewController") as! InfoPostViewController
+                    self.present(controller, animated: true, completion: nil)
                 }
             }))
-            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: nil))
             
             // show the alert
-            self.presentViewController(alert, animated: true, completion: nil)
+            self.present(alert, animated: true, completion: nil)
 
         } else {
-            let controller = self.storyboard!.instantiateViewControllerWithIdentifier("InfoPostViewController") as! InfoPostViewController
-            presentViewController(controller, animated: true, completion: nil)
+            let controller = self.storyboard!.instantiateViewController(withIdentifier: "InfoPostViewController") as! InfoPostViewController
+            present(controller, animated: true, completion: nil)
         }
         
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         
-        do {
-            reachability = try Reachability.reachabilityForInternetConnection()
-        } catch {
-            print("Unable to create Reachability")
-            return
-        }
-        
-        
-        do{
-            try reachability?.startNotifier()
-        }catch{
-            print("could not start reachability notifier")
+        if Reachability.connectedToNetwork() == true {
+            print("Internet Connection Available!")
+        } else {
+            print("Internet Connection NOT Available!")
+            let alert = UIAlertController(title: "Internet Connection not available!", message: "Please connect and try again.", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.cancel, handler: { action in
+                self.dismiss(animated: true, completion: nil)
+            }))
+            self.present(alert, animated: true, completion: nil)
         }
         
         loadStudentPins()
@@ -96,28 +90,28 @@ class MapTabViewController: UIViewController, MKMapViewDelegate {
                     StudentInfoManager.sharedInstance().studentLocations = students
                 } else {
                     print(error)
-                    if self.reachability?.currentReachabilityStatus == .NotReachable {
+                    if Reachability.connectedToNetwork() == false {
                         print("The internet is not reachable (error called on MapTabVC)")
                         
                         // create the alert
-                        let alert = UIAlertController(title: "Download Failed", message: "Internet connection appears to be offline. Please reconnect and try again.", preferredStyle: UIAlertControllerStyle.Alert)
+                        let alert = UIAlertController(title: "Download Failed", message: "Internet connection appears to be offline. Please reconnect and try again.", preferredStyle: UIAlertControllerStyle.alert)
                         
                         // add an action (button)
-                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                         
                         // show the alert
-                        self.presentViewController(alert, animated: true, completion: nil)
+                        self.present(alert, animated: true, completion: nil)
                     } else {
                         print("The internet is reachable (error called on MapTabVC)")
                         
                         // create the alert
-                        let alert = UIAlertController(title: "Download Failed", message: "Student Location information failed to download.  Please try again.", preferredStyle: UIAlertControllerStyle.Alert)
+                        let alert = UIAlertController(title: "Download Failed", message: "Student Location information failed to download.  Please try again.", preferredStyle: UIAlertControllerStyle.alert)
                         
                         // add the actions (buttons)
-                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Cancel, handler: nil))
+                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: nil))
                         
                         // show the alert
-                        self.presentViewController(alert, animated: true, completion: nil)
+                        self.present(alert, animated: true, completion: nil)
                     }
                 }
                 
@@ -164,17 +158,17 @@ class MapTabViewController: UIViewController, MKMapViewDelegate {
     // Here we create a view with a "right callout accessory view". You might choose to look into other
     // decoration alternatives. Notice the similarity between this method and the cellForRowAtIndexPath
     // method in TableViewDataSource.
-    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         
         let reuseId = "pin"
         
-        var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseId) as? MKPinAnnotationView
+        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId) as? MKPinAnnotationView
         
         if pinView == nil {
             pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
             pinView!.canShowCallout = true
-            pinView!.pinTintColor = UIColor.redColor()
-            pinView!.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
+            pinView!.pinTintColor = UIColor.red
+            pinView!.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
         }
         else {
             pinView!.annotation = annotation
@@ -186,21 +180,15 @@ class MapTabViewController: UIViewController, MKMapViewDelegate {
     
     // This delegate method is implemented to respond to taps. It opens the system browser
     // to the URL specified in the annotationViews subtitle property.
-    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         if control == view.rightCalloutAccessoryView {
-            let app = UIApplication.sharedApplication()
-            if let toOpen = view.annotation?.subtitle! {
-                app.openURL(NSURL(string: toOpen)!)
+            let app = UIApplication.shared
+            if let toOpen = URL(string: ((view.annotation?.subtitle)!)!) {
+                app.open(toOpen, options: [:], completionHandler: nil)
             }
         }
     }
-    //    func mapView(mapView: MKMapView, annotationView: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-    //
-    //        if control == annotationView.rightCalloutAccessoryView {
-    //            let app = UIApplication.sharedApplication()
-    //            app.openURL(NSURL(string: annotationView.annotation.subtitle))
-    //        }
-    //    }
+    
     
 }
 
