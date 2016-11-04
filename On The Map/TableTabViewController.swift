@@ -20,7 +20,7 @@ class TableTabViewController: UIViewController {
             if success {
                 print("Logout successful - dismissing controller")
             } else {
-                print(errorString)
+                print(errorString as Any)
             }
         }
         dismiss(animated: true, completion: nil)
@@ -85,7 +85,7 @@ class TableTabViewController: UIViewController {
                     StudentInfoManager.sharedInstance().studentLocations = students
                     self.tableView.reloadData()
                 } else {
-                    print(error)
+                    print(error as Any)
                     
                     if Reachability.connectedToNetwork() == false {
                         print("The internet is not reachable (error called on TableTabVC)")

@@ -16,7 +16,7 @@ extension StudentClient {
     // MARK: GET Convenience Methods
     
     //Used on TableTabVC to get student locations for cells - sorted in order from most recent to oldest
-    func getStudentLocationsSort(_ completionHandlerForStudentLocationsSort: @escaping (_ result: [StudentInfo]?, _ error: NSError?) -> Void) {
+    func getStudentLocationsSort(_ completionHandlerForStudentLocationsSort: @escaping (_ result: [StudentInfo]?, _ error: Error?) -> Void) {
         
         /* 1. Specify parameters, method (if has {key}), and HTTP body (if POST) */
         let parameters = [StudentClient.ParameterKeys.ParseLimit100: "100", StudentClient.ParameterKeys.ParseOrder: "-\(StudentClient.JSONResponseKeys.UpdatedAt)"]
@@ -41,7 +41,7 @@ extension StudentClient {
 
     
     //Used on MapTabVC to get student locations for pins
-    func getStudentLocations(_ completionHandlerForStudentLocations: @escaping (_ result: [StudentInfo]?, _ error: NSError?) -> Void) {
+    func getStudentLocations(_ completionHandlerForStudentLocations: @escaping (_ result: [StudentInfo]?, _ error: Error?) -> Void) {
         
         /* 1. Specify parameters, method (if has {key}), and HTTP body (if POST) */
         let parameters = [StudentClient.ParameterKeys.ParseLimit100: "100"]
@@ -56,6 +56,8 @@ extension StudentClient {
             } else {
                 if let results = results?[StudentClient.JSONResponseKeys.StudentResults] as? [[String:AnyObject]] {
                     let students = StudentInfo.studentsFromResults(results)
+                    print("These are the results from getStudentLocations JSON data")
+                    print(results)
                     for result in results {
                         if let mainUserID = result[StudentClient.JSONResponseKeys.UniqueKey] as? String , mainUserID == StudentClient.sharedInstance().userID {
                             guard let firstName = result[StudentClient.JSONResponseKeys.FirstName] as? String else {
@@ -73,7 +75,7 @@ extension StudentClient {
                             self.userFirstName = firstName
                             self.userLastName = lastName
                             self.userObjectID = objectID
-                            //print("The main user info is: \(self.userFirstName!) \(self.userLastName!) with an objectID of \(self.userObjectID!)")
+                            print("The main user info is: \(self.userFirstName!) \(self.userLastName!) with an objectID of \(self.userObjectID!)")
                         }
                     }
                     completionHandlerForStudentLocations(students, nil)
@@ -86,7 +88,7 @@ extension StudentClient {
 
     //Get udacity public user data like first and last name from userID (obtained from udacityPOSTSession)
             //Then use this user data in postStudentLocationToParse method
-    func getUdacityPublicUserData(_ completionHandlerForGetPublicUserData: @escaping (_ result: [String:AnyObject]?, _ error: NSError?) -> Void) {
+    func getUdacityPublicUserData(_ completionHandlerForGetPublicUserData: @escaping (_ result: [String:AnyObject]?, _ error: Error?) -> Void) {
         
         /* 1. Specify parameters, method (if has {key}), and HTTP body (if POST) */
         let parameters = [String:AnyObject]()
@@ -120,7 +122,7 @@ extension StudentClient {
     // MARK: PUT Convenience Methods
     
     //PUT or update a student location
-    func updateStudentLocationToParse(_ completionHandlerForUPDATEStudentLocation: @escaping (_ result: String?, _ error: NSError?) -> Void) {
+    func updateStudentLocationToParse(_ completionHandlerForUPDATEStudentLocation: @escaping (_ result: String?, _ error: Error?) -> Void) {
         
         /* 1. Specify parameters, method (if has {key}), and HTTP body (if POST) */
         let parameters = [String:AnyObject]()
@@ -152,7 +154,7 @@ extension StudentClient {
     // MARK: POST Convenience Methods
     
     //POST a student location to Parse
-    func postStudentLocationToParse(_ completionHandlerForPOSTStudentLocation: @escaping (_ result: String?, _ error: NSError?) -> Void) {
+    func postStudentLocationToParse(_ completionHandlerForPOSTStudentLocation: @escaping (_ result: String?, _ error: Error?) -> Void) {
         
         /* 1. Specify parameters, method (if has {key}), and HTTP body (if POST) */
         let parameters = [String:AnyObject]()

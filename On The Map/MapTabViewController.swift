@@ -21,7 +21,7 @@ class MapTabViewController: UIViewController, MKMapViewDelegate {
             if success {
                 print("Logout successful - dismissing controller")
             } else {
-                print(errorString)
+                print(errorString as Any)
             }
         }
         dismiss(animated: true, completion: nil)
@@ -89,7 +89,7 @@ class MapTabViewController: UIViewController, MKMapViewDelegate {
                 if let students = result {
                     StudentInfoManager.sharedInstance().studentLocations = students
                 } else {
-                    print(error)
+                    print(error as Any)
                     if Reachability.connectedToNetwork() == false {
                         print("The internet is not reachable (error called on MapTabVC)")
                         
@@ -125,13 +125,24 @@ class MapTabViewController: UIViewController, MKMapViewDelegate {
                 
                 for student in StudentInfoManager.sharedInstance().studentLocations {
                     
+                    // check to make sure that the latitude and longitude are not nil before creating annotation to append
+                    guard student.latitude != nil && student.longitude != nil else {
+                        print("In loadStudentPins on MapTabVC -- latitutde and/or longitude are nil - no value")
+                        continue
+                    }
+                    
                     // Notice that the float values are being used to create CLLocationDegree values.
                     // This is a version of the Double type.
-                    let lat = CLLocationDegrees(student.latitude)
-                    let long = CLLocationDegrees(student.longitude)
+                    let lat = CLLocationDegrees(student.latitude!)
+                    let long = CLLocationDegrees(student.longitude!)
                     
                     // The lat and long are used to create a CLLocationCoordinates2D instance.
                     let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
+                    
+                    guard student.firstName != nil && student.lastName != nil && student.mediaURL != nil else {
+                        print("In loadStudentPins on MapTabVC -- firstName, lastName, and/or mediaURL are nil - no value")
+                        continue
+                    }
                     
                     let first = student.firstName!
                     let last = student.lastName!

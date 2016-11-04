@@ -127,7 +127,7 @@ class InfoPostViewController: UIViewController, MKMapViewDelegate, UITextViewDel
                             print("There were no errors posting userInfo to parse: \(userInfo)")
                             self.dismiss(animated: true, completion: nil)
                         } else {
-                            print(error)
+                            print(error as Any)
                             
                             if Reachability.connectedToNetwork() == false {
                                 print("The internet is not reachable (error called on InfoPostVC)")
@@ -201,7 +201,7 @@ class InfoPostViewController: UIViewController, MKMapViewDelegate, UITextViewDel
     func forwardGeocoding(_ address: String) {
         CLGeocoder().geocodeAddressString(address, completionHandler: { (placemarks, error) in
             if error != nil {
-                print(error)
+                print(error as Any)
                 performUIUpdatesOnMain{
                     if Reachability.connectedToNetwork() == false {
                         print("The internet is not reachable (error called on InfoPostVC)")
